@@ -6,6 +6,9 @@
       <sourceFolder url="file://$MODULE_DIR$/src/bin/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/logging/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/network/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/raknet/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/raknet/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/raknet/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
