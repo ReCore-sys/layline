@@ -11,6 +11,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/raknet/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/raknet/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/components/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/lua/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/macros/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/macros/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/network/codec/src" isTestSource="false" />

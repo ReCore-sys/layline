@@ -1,13 +1,15 @@
 pub mod error;
+pub mod load_spawn_locations;
 
 use crate::error::WorldError;
 use ahash::AHashMap;
 use glam::Vec3A;
 use layline_shared::locations::Location;
 use layline_shared::profession::Profession;
+use crate::load_spawn_locations::load_spawn_locations;
 
 pub struct GameMap {
-    pub spawn_locations: AHashMap<Location, AHashMap<Profession, Vec3A>>,
+    pub spawn_locations: AHashMap<Location, AHashMap<Profession, Vec<Vec3A>>>,
 }
 
 impl GameMap {
@@ -29,7 +31,7 @@ impl GameMap {
         };
 
         Ok(GameMap {
-            spawn_locations: AHashMap::new(),
+            spawn_locations: load_spawn_locations(path)?,
         })
     }
 }

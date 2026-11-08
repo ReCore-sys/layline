@@ -11,7 +11,7 @@ members = [
     "src/macros",
     "src/components",
     "src/world"
-, "src/shared"]
+, "src/shared", "src/lua"]
 
 [workspace.package]
 version = "0.1.0"
@@ -32,6 +32,7 @@ layline-macros = { path = "src/macros" }
 layline-components = { path = "src/components" }
 layline-world = { path = "src/world" }
 layline-shared = { path = "src/shared" }
+layline-lua = { path = "src/lua" }
 
 
 # Async
@@ -54,7 +55,7 @@ ahash = "0.8.12"
 glam = "0.34.3"
 
 # Lua
-mlua = { version = "0.12.2",  features = ["luajit"]}
+mlua = { version = "0.12.2",  features = ["luajit", "serde"]}
 
 # Errors
 thiserror = "2.0.21"
@@ -63,11 +64,19 @@ thiserror = "2.0.21"
 tracing = "0.1.44"
 tracing-subscriber = "0.3.23"
 
-# Macros and build scripts
+# Serialization
+serde_json = "1.0.154"
+serde = "1.0.229"
+
+# Macros
+strum = "0.28.0"
+strum_macros = "0.28.0"
+include_dir = { version = "0.7.4", features = ["glob"] }
+
+# Build scripts and custom macros
 syn = { version = "3.0.9", features = ["full"] }
 quote = "1.0.47"
 proc-macro2 = "1.0.107"
-serde_json = "1.0.154"
 
 # Data structures
 crossbeam-queue = "0.3.14"
