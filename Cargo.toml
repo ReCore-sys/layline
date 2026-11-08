@@ -7,8 +7,11 @@ members = [
     "src/network",
     "src/raknet",
     "src/network/codec",
-    "src/network/packets"
-, "src/macros", "src/components"]
+    "src/network/packets",
+    "src/macros",
+    "src/components",
+    "src/world"
+, "src/shared"]
 
 [workspace.package]
 version = "0.1.0"
@@ -27,6 +30,8 @@ layline-codec = { path = "src/network/codec" }
 layline-packets = { path = "src/network/packets" }
 layline-macros = { path = "src/macros" }
 layline-components = { path = "src/components" }
+layline-world = { path = "src/world" }
+layline-shared = { path = "src/shared" }
 
 
 # Async
@@ -43,6 +48,16 @@ bytes = "1.12.1"
 
 # Rand/crypto
 rand = "0.10.3"
+ahash = "0.8.12"
+
+# Maths
+glam = "0.34.3"
+
+# Lua
+mlua = { version = "0.12.2",  features = ["luajit"]}
+
+# Errors
+thiserror = "2.0.21"
 
 # Logging
 tracing = "0.1.44"

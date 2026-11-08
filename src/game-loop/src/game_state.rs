@@ -1,6 +1,7 @@
 use hecs::World;
+use layline_world::GameMap;
 
-#[derive(Default)]
 pub struct GameState {
     pub world: World,
+    pub map: GameMap
 }

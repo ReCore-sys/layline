@@ -10,6 +10,7 @@ tracing = { workspace = true }
 layline-packets = { workspace = true }
 hecs = { workspace = true }
 layline-components = { workspace = true }
+layline-world = { workspace = true }
 
 [build-dependencies]
 syn = { workspace = true }

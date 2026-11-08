@@ -1,9 +1,11 @@
 mod game_state;
 mod handlers;
 
+use tracing::error;
 use crate::game_state::GameState;
 use crate::handlers::PacketRegistry;
 use layline_network::start_net_server;
+use layline_world::GameMap;
 
 const TPS: u32 = 30; // Ticks per second
 const MAX_PACKETS_PER_TICK: usize = 64;
@@ -13,7 +15,17 @@ pub fn start_game_loop() {
         start_net_server();
     });
     let registry = handlers::registry();
-    let mut world = GameState::default();
+    let map = match GameMap::new() {
+        Ok(map) => map,
+        Err(e) => {
+            error!("Failed to create game map: {}", e);
+            return;
+        }
+    };
+    let mut world = GameState {
+        world: hecs::World::new(),
+        map,
+    };
     loop {
         let start_time = std::time::Instant::now();
         handle_connections(&registry, &mut world);

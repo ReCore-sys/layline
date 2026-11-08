@@ -1,0 +1,10 @@
+[package]
+name = "layline-world"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+layline-shared = { workspace = true }
+ahash = { workspace = true }
+glam = { workspace = true }
+thiserror = { workspace = true }
