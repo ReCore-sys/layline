@@ -25,10 +25,11 @@ messages. See [Networking](index.md) for the application header and
    A second-factor challenge is a separate conditional path.
 3. On acceptance, the server reserves a connection slot and prepares the
    player's online ID. No in-world player has been registered yet.
-4. The server sends zero or more `SpawnRegion` (`0x0073`) packets containing an
-   index and a serialized Lua table, followed by connection details carried in
-   `RequestData` (`0x0029`). These contain the slot, role, map, mods, spawn
-   location, server and sandbox options, game time and other world data.
+4. The server sends zero or more [SpawnRegion](packets/spawn-region.md)
+   (`0x0073`) packets containing an index and a serialized Lua table, followed
+   by connection details carried in `RequestData` (`0x0029`). These contain the
+   slot, role, map, mods, spawn location, server and sandbox options, game time
+   and other world data.
    The client processes the details and checks required mods before proceeding.
 
 The server issues spawn-region packets before connection details, but both use

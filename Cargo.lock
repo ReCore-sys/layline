@@ -261,6 +261,7 @@ name = "layline-codec"
 version = "0.1.0"
 dependencies = [
  "bytes",
+ "mlua",
  "raknet-v6",
 ]
 

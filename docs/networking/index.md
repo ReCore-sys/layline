@@ -27,6 +27,12 @@ they are version-dependent.
 See [Network data types](data-types.md) for primitive encodings, byte order
 and string handling.
 
+## Lua tables
+
+Lua tables use different encodings depending on the packet and value types.
+See [Lua table serialization](lua/index.md) before implementing a table
+decoder.
+
 ## Packets
 
 | Packet | ID | Direction | Description |
@@ -34,6 +40,7 @@ and string handling.
 | [Login](packets/login.md) | `0x0001` | Client to server | Account login and version information |
 | [AccessDenied](packets/rejected.md) | `0x0064` | Server to client | Login rejection reason |
 | [Ping](packets/ping.md) | `0x0072` | Both | Server-list connection and player-limit query |
+| [SpawnRegion](packets/spawn-region.md) | `0x0073` | Server to client | Spawn-region index and serialized Lua table |
 
 See [Login and world loading sequence](login-sequence.md) for the exchanges
 involved in joining a server and entering the world.

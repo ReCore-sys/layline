@@ -1,4 +1,5 @@
 pub mod primitives;
+pub mod lua;
 
 pub use bytes;
 pub use raknet_v6::Reliability;

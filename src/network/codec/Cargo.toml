@@ -6,3 +6,4 @@ edition.workspace = true
 [dependencies]
 bytes = { workspace = true }
 raknet-v6 = { workspace = true }
+mlua = { workspace = true }
