@@ -19,7 +19,7 @@ In those login rejection paths, the server then disconnects the client.
 ## Packet format
 
 Fields appear in the order shown. Types and byte order are described in
-[Network data types](data-types.md). The table includes the application header
+[Network data types](../data-types.md). The table includes the application header
 but excludes RakNet transport framing.
 
 | Field | Type | Description |

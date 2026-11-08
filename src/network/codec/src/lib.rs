@@ -27,7 +27,6 @@ pub trait Packet {
     const ORDERING_CHANNEL: u8;
 
     const RELIABILITY: Reliability;
-
 }
 
 pub enum PacketDirection {

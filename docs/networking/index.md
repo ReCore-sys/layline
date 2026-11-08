@@ -31,9 +31,9 @@ and string handling.
 
 | Packet | ID | Direction | Description |
 | --- | --- | --- | --- |
-| [Login](login.md) | `0x0001` | Client to server | Account login and version information |
-| [AccessDenied](rejected.md) | `0x0064` | Server to client | Login rejection reason |
-| [Ping](ping.md) | `0x0072` | Both | Server-list connection and player-limit query |
+| [Login](packets/login.md) | `0x0001` | Client to server | Account login and version information |
+| [AccessDenied](packets/rejected.md) | `0x0064` | Server to client | Login rejection reason |
+| [Ping](packets/ping.md) | `0x0072` | Both | Server-list connection and player-limit query |
 
 See [Login and world loading sequence](login-sequence.md) for the exchanges
 involved in joining a server and entering the world.

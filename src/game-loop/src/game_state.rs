@@ -1,7 +1,6 @@
 use hecs::World;
 
-
 #[derive(Default)]
 pub struct GameState {
-    pub world: World
+    pub world: World,
 }

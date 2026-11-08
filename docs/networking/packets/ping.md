@@ -34,7 +34,7 @@ connection requirements.
 ## Packet format
 
 Fields appear in the order shown. Types and byte order are described in
-[Network data types](data-types.md). The tables include the
+[Network data types](../data-types.md). The tables include the
 application header but exclude RakNet transport framing.
 
 ### Request: client to server

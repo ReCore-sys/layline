@@ -80,7 +80,14 @@ impl Connection {
         let socket = self.socket.clone();
         let mut outgoing = tokio::spawn(async move {
             while let Some(packet) = outbound_messages.recv().await {
-                if let Err(error) = socket.send_bytes_with_order_channel(packet.bytes, packet.reliability, packet.ordering_channel).await {
+                if let Err(error) = socket
+                    .send_bytes_with_order_channel(
+                        packet.bytes,
+                        packet.reliability,
+                        packet.ordering_channel,
+                    )
+                    .await
+                {
                     warn!("Failed to send packet: {error}");
                     break;
                 }
@@ -169,20 +176,24 @@ mod tests {
             }
 
             for connections in [1, 2] {
-                connection.send(OutboundPing {
-                    server_ip: "a".to_string(),
-                    connections,
-                    max_connections: 32,
-                }).unwrap();
+                connection
+                    .send(OutboundPing {
+                        server_ip: "a".to_string(),
+                        connections,
+                        max_connections: 32,
+                    })
+                    .unwrap();
                 let mut expected = b"\x86\x00\x72\x00\x01a".to_vec();
                 expected.extend_from_slice(&i32::to_be_bytes(connections));
                 expected.extend_from_slice(&32_i32.to_be_bytes());
                 assert_eq!(client.recv().await.unwrap(), expected);
             }
 
-            connection.send(Rejected {
-                reason: "ServerFull".to_string(),
-            }).unwrap();
+            connection
+                .send(Rejected {
+                    reason: "ServerFull".to_string(),
+                })
+                .unwrap();
             assert_eq!(
                 client.recv().await.unwrap(),
                 b"\x86\x00\x64\x00\x0aServerFull"

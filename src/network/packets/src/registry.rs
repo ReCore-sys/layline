@@ -128,7 +128,12 @@ mod tests {
 
         let mut world = Vec::new();
         registry.dispatch(&mut world, &(), 0x7fff, Bytes::new());
-        registry.dispatch(&mut world, &(), InboundPing::PACKET_ID, Bytes::from_static(b"\x00"));
+        registry.dispatch(
+            &mut world,
+            &(),
+            InboundPing::PACKET_ID,
+            Bytes::from_static(b"\x00"),
+        );
         registry.dispatch(&mut world, &(), Login::PACKET_ID, Bytes::new());
         assert!(world.is_empty());
     }

@@ -19,7 +19,7 @@ sends `Ping` instead of `Login`.
 ## Packet format
 
 Fields appear in the order shown. Types and byte order are described in
-[Network data types](data-types.md). The table includes the application header
+[Network data types](../data-types.md). The table includes the application header
 but excludes RakNet transport framing.
 
 | Field | Type | Description |
@@ -49,5 +49,5 @@ connection slot, sends configured spawn regions, and sends connection details
 in a `RequestData` packet. Those details include map, mod, server-option and
 world data. This does not yet create the in-world player.
 
-See [Login and world loading sequence](login-sequence.md) for the subsequent
+See [Login and world loading sequence](../login-sequence.md) for the subsequent
 loading and player-connect exchanges.

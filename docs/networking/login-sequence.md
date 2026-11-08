@@ -17,11 +17,11 @@ messages. See [Networking](index.md) for the application header and
 ## 1. Connect and authenticate
 
 1. The client establishes a RakNet connection, then sends
-   [Login](login.md) (`0x0001`) with its username, password, client version
+   [Login](packets/login.md) (`0x0001`) with its username, password, client version
    and authentication type.
 2. The server checks the version, authenticates the account and checks
    conditions such as capacity and duplicate usernames. A rejection can
-   produce [AccessDenied](rejected.md) (`0x0064`) followed by disconnection.
+   produce [AccessDenied](packets/rejected.md) (`0x0064`) followed by disconnection.
    A second-factor challenge is a separate conditional path.
 3. On acceptance, the server reserves a connection slot and prepares the
    player's online ID. No in-world player has been registered yet.
@@ -33,7 +33,7 @@ messages. See [Networking](index.md) for the application header and
 
 The server issues spawn-region packets before connection details, but both use
 plain reliable delivery rather than reliable ordered delivery, so this is not
-a cross-packet arrival-order guarantee. A server-list [Ping](ping.md) is a
+a cross-packet arrival-order guarantee. A server-list [Ping](packets/ping.md) is a
 separate connection path and does not perform login.
 
 ## 2. Load or choose a character

@@ -2,7 +2,9 @@ use std::path::{Path, PathBuf};
 use std::{env, fs};
 
 fn rust_files(dir: &Path, files: &mut Vec<PathBuf>) {
-    for entry in fs::read_dir(dir).unwrap_or_else(|e| panic!("failed reading {}: {e}", dir.display())) {
+    for entry in
+        fs::read_dir(dir).unwrap_or_else(|e| panic!("failed reading {}: {e}", dir.display()))
+    {
         let path = entry.unwrap().path();
         if path.is_dir() {
             rust_files(&path, files);

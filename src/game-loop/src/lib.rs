@@ -1,8 +1,8 @@
-mod handlers;
 mod game_state;
+mod handlers;
 
-use crate::handlers::PacketRegistry;
 use crate::game_state::GameState;
+use crate::handlers::PacketRegistry;
 use layline_network::start_net_server;
 
 const TPS: u32 = 30; // Ticks per second
