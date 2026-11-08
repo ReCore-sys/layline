@@ -1,0 +1,59 @@
+[workspace]
+resolver = "3"
+members = [
+    "src/bin",
+    "src/game-loop",
+    "src/logging",
+    "src/network",
+    "src/raknet",
+    "src/network/codec",
+    "src/network/packets"
+, "src/macros", "src/components"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+
+
+
+
+[workspace.dependencies]
+# Workspace deps
+layline-logging = { path = "src/logging" }
+layline-network = { path = "src/network" }
+raknet-v6 = { path = "src/raknet" }
+layline-game-loop = { path = "src/game-loop" }
+layline-codec = { path = "src/network/codec" }
+layline-packets = { path = "src/network/packets" }
+layline-macros = { path = "src/macros" }
+layline-components = { path = "src/components" }
+
+
+# Async
+tokio = "1.54.1"
+
+# ECS
+hecs = "0.11.2"
+
+# Network
+socket2 = "0.6.5"
+
+# Byte manipulation
+bytes = "1.12.1"
+
+# Rand/crypto
+rand = "0.10.3"
+
+# Logging
+tracing = "0.1.44"
+tracing-subscriber = "0.3.23"
+
+# Macros and build scripts
+syn = { version = "3.0.9", features = ["full"] }
+quote = "1.0.47"
+proc-macro2 = "1.0.107"
+serde_json = "1.0.154"
+
+# Data structures
+crossbeam-queue = "0.3.14"
+dashmap = "7.0.0-rc2"

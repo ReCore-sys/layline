@@ -1,0 +1,8 @@
+[package]
+name = "layline-codec"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+bytes = { workspace = true }
+raknet-v6 = { workspace = true }

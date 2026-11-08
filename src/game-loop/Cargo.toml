@@ -1,0 +1,15 @@
+[package]
+name = "layline-game-loop"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+layline-network = { workspace = true }
+layline-macros = { workspace = true }
+tracing = { workspace = true }
+layline-packets = { workspace = true }
+hecs = { workspace = true }
+layline-components = { workspace = true }
+
+[build-dependencies]
+syn = { workspace = true }

@@ -1,0 +1,14 @@
+[package]
+name = "layline-packets"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+layline-codec = { workspace = true }
+layline-macros = { workspace = true }
+bytes = { workspace = true }
+tracing = { workspace = true }
+raknet-v6 = { workspace = true }
+
+[build-dependencies]
+syn = { workspace = true }

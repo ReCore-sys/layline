@@ -1,0 +1,2386 @@
+{
+  "Checksum": {
+    "id": 0,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 7
+  },
+  "Login": {
+    "id": 1,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "None",
+    "handling": 1
+  },
+  "LoginQueueRequest": {
+    "id": 2,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 5
+  },
+  "LoginQueueDone": {
+    "id": 3,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 5
+  },
+  "LoadPlayerProfile": {
+    "id": 4,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "CreatePlayer": {
+    "id": 5,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 7
+  },
+  "PlayerConnect": {
+    "id": 6,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "ConnectedPlayer": {
+    "id": 7,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "ConnectCoop": {
+    "id": 8,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "ConnectedCoop": {
+    "id": 9,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "GoogleAuthKey": {
+    "id": 10,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 0,
+    "capability": "None",
+    "handling": 7
+  },
+  "GoogleAuth": {
+    "id": 11,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 0,
+    "capability": "None",
+    "handling": 1
+  },
+  "GoogleAuthRequest": {
+    "id": 12,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 0,
+    "capability": "None",
+    "handling": 4
+  },
+  "PlayerUpdateReliable": {
+    "id": 13,
+    "reliability": "ReliableOrdered",
+    "channel": 5,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "PlayerUpdateUnreliable": {
+    "id": 14,
+    "reliability": "UnreliableSequenced",
+    "channel": 5,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "PlayerDataRequest": {
+    "id": 15,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "HumanVisual": {
+    "id": 16,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "SyncClothing": {
+    "id": 17,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "SyncVisuals": {
+    "id": 18,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "Equip": {
+    "id": 19,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "AddXPMultiplier": {
+    "id": 20,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "HaloText": {
+    "id": 21,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "PlayerDeath": {
+    "id": 22,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "ChangeSafety": {
+    "id": 23,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "BodyDamageUpdate": {
+    "id": 24,
+    "reliability": "Reliable",
+    "channel": 5,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "GameCharacterAttachedItem": {
+    "id": 25,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "VariableSync": {
+    "id": 26,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 7
+  },
+  "SyncPlayerStats": {
+    "id": 27,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "CanModifyBodyStats",
+    "handling": 3
+  },
+  "SyncPlayerFields": {
+    "id": 28,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "ForageItemFound": {
+    "id": 29,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "ForageRequestZone": {
+    "id": 30,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "ForagePool": {
+    "id": 31,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "ForageSpot": {
+    "id": 32,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "PlayerDropHeldItems": {
+    "id": 33,
+    "reliability": "ReliableOrdered",
+    "channel": 1,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "ClothingWetness": {
+    "id": 34,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "RequestMedicalCheck": {
+    "id": 35,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "HiddenAuthors": {
+    "id": 36,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "ServerMap": {
+    "id": 37,
+    "reliability": "ReliableOrdered",
+    "channel": 4,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 6
+  },
+  "SentChunk": {
+    "id": 38,
+    "reliability": "Reliable",
+    "channel": 4,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 0
+  },
+  "RequestZipList": {
+    "id": 39,
+    "reliability": "Reliable",
+    "channel": 4,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "NotRequiredInZip": {
+    "id": 40,
+    "reliability": "Reliable",
+    "channel": 4,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "RequestData": {
+    "id": 41,
+    "reliability": "Reliable",
+    "channel": 4,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 7
+  },
+  "ChunkNotReady": {
+    "id": 42,
+    "reliability": "Reliable",
+    "channel": 4,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 0
+  },
+  "ZombieList": {
+    "id": 43,
+    "reliability": "Unreliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "ZombieSimulationUnreliable": {
+    "id": 44,
+    "reliability": "Unreliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "ZombieSimulationReliable": {
+    "id": 45,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "ZombieSynchronizationUnreliable": {
+    "id": 46,
+    "reliability": "Unreliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "ZombieSynchronizationReliable": {
+    "id": 47,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "ZombieDeleteOnClient": {
+    "id": 48,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "ZombieRequest": {
+    "id": 49,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "ZombieStagger": {
+    "id": 50,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "ZombieDeath": {
+    "id": 51,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "SlowFactor": {
+    "id": 52,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "ZombieControl": {
+    "id": 53,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "Thump": {
+    "id": 54,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "ZombieFall": {
+    "id": 55,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "AnimalCommand": {
+    "id": 56,
+    "reliability": "ReliableOrdered",
+    "channel": 1,
+    "priority": 1,
+    "capability": "AnimalCheats",
+    "handling": 3
+  },
+  "AnimalOwnership": {
+    "id": 57,
+    "reliability": "ReliableOrdered",
+    "channel": 7,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "AnimalPacket": {
+    "id": 58,
+    "reliability": "Unreliable",
+    "channel": 7,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "AnimalUpdateReliable": {
+    "id": 59,
+    "reliability": "Reliable",
+    "channel": 7,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "AnimalUpdateUnreliable": {
+    "id": 60,
+    "reliability": "Unreliable",
+    "channel": 7,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "AnimalEvent": {
+    "id": 61,
+    "reliability": "Reliable",
+    "channel": 7,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "AnimalDeath": {
+    "id": 62,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "AnimalTracks": {
+    "id": 63,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "AddTrack": {
+    "id": 64,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "ManageAnimalTrackOnWorldMap": {
+    "id": 65,
+    "reliability": "Reliable",
+    "channel": 7,
+    "priority": 2,
+    "capability": "AnimalCheats",
+    "handling": 2
+  },
+  "VehicleRequest": {
+    "id": 66,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "VehicleFullUpdate": {
+    "id": 67,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "VehicleUpdate": {
+    "id": 68,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "VehiclePhysicsReliable": {
+    "id": 69,
+    "reliability": "ReliableOrdered",
+    "channel": 8,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "VehiclePhysicsUnreliable": {
+    "id": 70,
+    "reliability": "UnreliableSequenced",
+    "channel": 8,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "VehicleTowingAttach": {
+    "id": 71,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "VehicleTowingDetach": {
+    "id": 72,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "VehicleTowingState": {
+    "id": 73,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "VehicleRemove": {
+    "id": 74,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "VehicleCollide": {
+    "id": 75,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "VehiclePassengerPosition": {
+    "id": 76,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "VehiclePassengerRequest": {
+    "id": 77,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "VehiclePassengerResponse": {
+    "id": 78,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "VehicleEnter": {
+    "id": 79,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "VehicleExit": {
+    "id": 80,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "VehicleSwitchSeat": {
+    "id": 81,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "VehicleSoundAddVehicle": {
+    "id": 82,
+    "reliability": "Reliable",
+    "channel": 8,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 6
+  },
+  "VehicleSoundRemoveVehicle": {
+    "id": 83,
+    "reliability": "Reliable",
+    "channel": 8,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 6
+  },
+  "VehicleSoundUpdateVehicle": {
+    "id": 84,
+    "reliability": "Reliable",
+    "channel": 8,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 6
+  },
+  "State": {
+    "id": 85,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "Helicopter": {
+    "id": 86,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "SmashWindow": {
+    "id": 87,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "EatFood": {
+    "id": 88,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "Drink": {
+    "id": 89,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "BurnCorpse": {
+    "id": 90,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "SneezeCough": {
+    "id": 91,
+    "reliability": "Unreliable",
+    "channel": 0,
+    "priority": 3,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "AddBlood": {
+    "id": 92,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 3,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "RemoveBlood": {
+    "id": 93,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "WakeUpPlayer": {
+    "id": 94,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "EatBody": {
+    "id": 95,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "ReadAnnotedMap": {
+    "id": 96,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "ZombieHelmetFalling": {
+    "id": 97,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "TimeSync": {
+    "id": 98,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 7
+  },
+  "SetMultiplier": {
+    "id": 99,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "AccessDenied": {
+    "id": 100,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 4
+  },
+  "StartPause": {
+    "id": 101,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "StopPause": {
+    "id": 102,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "PlayerTimeout": {
+    "id": 103,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 6
+  },
+  "SyncClock": {
+    "id": 104,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 6
+  },
+  "SandboxOptions": {
+    "id": 105,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "SandboxOptions",
+    "handling": 3
+  },
+  "ServerQuit": {
+    "id": 106,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "MessageForAdmin": {
+    "id": 107,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "CanSeeMessageForAdmin",
+    "handling": 2
+  },
+  "MetaData": {
+    "id": 108,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "None",
+    "handling": 6
+  },
+  "MetaGrid": {
+    "id": 109,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "WorldMessage": {
+    "id": 110,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "WorkWithUserlog",
+    "handling": 1
+  },
+  "ReceiveCommand": {
+    "id": 111,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "ReloadOptions": {
+    "id": 112,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "Kicked": {
+    "id": 113,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 6
+  },
+  "Ping": {
+    "id": 114,
+    "reliability": "Unreliable",
+    "channel": 0,
+    "priority": 0,
+    "capability": "None",
+    "handling": 7
+  },
+  "SpawnRegion": {
+    "id": 115,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 6
+  },
+  "WorldMapPlayerPosition": {
+    "id": 116,
+    "reliability": "UnreliableSequenced",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "WorldMap": {
+    "id": 117,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 7
+  },
+  "ItemTransaction": {
+    "id": 118,
+    "reliability": "ReliableOrdered",
+    "channel": 1,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "GeneralAction": {
+    "id": 119,
+    "reliability": "ReliableOrdered",
+    "channel": 1,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "NetTimedAction": {
+    "id": 120,
+    "reliability": "ReliableOrdered",
+    "channel": 1,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "BuildAction": {
+    "id": 121,
+    "reliability": "ReliableOrdered",
+    "channel": 1,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "FishingAction": {
+    "id": 122,
+    "reliability": "ReliableOrdered",
+    "channel": 1,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "AddInventoryItemToContainer": {
+    "id": 123,
+    "reliability": "ReliableOrdered",
+    "channel": 1,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "RemoveInventoryItemFromContainer": {
+    "id": 124,
+    "reliability": "ReliableOrdered",
+    "channel": 1,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "ReplaceInventoryItemInContainer": {
+    "id": 125,
+    "reliability": "ReliableOrdered",
+    "channel": 1,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "SyncItemDelete": {
+    "id": 126,
+    "reliability": "ReliableOrdered",
+    "channel": 1,
+    "priority": 1,
+    "capability": "EditItem",
+    "handling": 3
+  },
+  "AddItemToMap": {
+    "id": 127,
+    "reliability": "ReliableOrdered",
+    "channel": 1,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "AddObjectToMap": {
+    "id": 128,
+    "reliability": "ReliableOrdered",
+    "channel": 1,
+    "priority": 1,
+    "capability": "AddItem",
+    "handling": 3
+  },
+  "AddCorpseToMap": {
+    "id": 129,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "RemoveItemFromSquare": {
+    "id": 130,
+    "reliability": "ReliableOrdered",
+    "channel": 1,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "RemoveCorpseFromMap": {
+    "id": 131,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "RequestItemsForContainer": {
+    "id": 132,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "RemoveContestedItemsFromInventory": {
+    "id": 133,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "ItemStats": {
+    "id": 134,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "AddBrokenGlass": {
+    "id": 135,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "AddExplosiveTrap": {
+    "id": 136,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "SledgehammerDestroy": {
+    "id": 137,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "UseDebugContextMenu",
+    "handling": 3
+  },
+  "SyncPlayerAlarmClock": {
+    "id": 138,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "SyncWorldAlarmClock": {
+    "id": 139,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "SyncExtendedPlacement": {
+    "id": 140,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "SyncItemActivated": {
+    "id": 141,
+    "reliability": "ReliableOrdered",
+    "channel": 1,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "GlobalObjects": {
+    "id": 142,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "ReceiveModData": {
+    "id": 143,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "ReceiveContainerModData": {
+    "id": 144,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "GlobalModData": {
+    "id": 145,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "GlobalModDataRequest": {
+    "id": 146,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "SyncItemFields": {
+    "id": 147,
+    "reliability": "Reliable",
+    "channel": 1,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "SyncItemModData": {
+    "id": 148,
+    "reliability": "Reliable",
+    "channel": 1,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "SyncHandWeaponFields": {
+    "id": 149,
+    "reliability": "Reliable",
+    "channel": 1,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "PlayerHitSquare": {
+    "id": 150,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "PlayerHitObject": {
+    "id": 151,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "PlayerHitVehicle": {
+    "id": 152,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "PlayerHitZombie": {
+    "id": 153,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "PlayerHitPlayer": {
+    "id": 154,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "PlayerHitAnimal": {
+    "id": 155,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "ZombieHitPlayer": {
+    "id": 156,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "AnimalHitPlayer": {
+    "id": 157,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "AnimalHitAnimal": {
+    "id": 158,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "AnimalHitThumpable": {
+    "id": 159,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "ZombieHitThumpable": {
+    "id": 160,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "VehicleHitZombie": {
+    "id": 161,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "VehicleHitPlayer": {
+    "id": 162,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "VehicleHitAnimal": {
+    "id": 163,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "PlayerDamage": {
+    "id": 164,
+    "reliability": "ReliableOrdered",
+    "channel": 10,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "PlayerStats": {
+    "id": 165,
+    "reliability": "ReliableOrdered",
+    "channel": 12,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "PlayerHealth": {
+    "id": 166,
+    "reliability": "ReliableOrdered",
+    "channel": 14,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "PlayerInjuries": {
+    "id": 167,
+    "reliability": "ReliableOrdered",
+    "channel": 9,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "PlayerEffects": {
+    "id": 168,
+    "reliability": "ReliableOrdered",
+    "channel": 13,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "PlayerXp": {
+    "id": 169,
+    "reliability": "ReliableOrdered",
+    "channel": 11,
+    "priority": 2,
+    "capability": "CanModifyPlayerStatsInThePlayerStatsUI",
+    "handling": 3
+  },
+  "AttackCollisionCheckPacket": {
+    "id": 170,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "PlayerEmptyShot": {
+    "id": 171,
+    "reliability": "Unreliable",
+    "channel": 5,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "PlayerSteppedOnGlass": {
+    "id": 172,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "PlaySound": {
+    "id": 173,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "RangedWeaponSound": {
+    "id": 174,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "LoopedRangedWeaponSound": {
+    "id": 175,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "WorldSoundPacket": {
+    "id": 176,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "AddAmbient": {
+    "id": 177,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "ZombieSound": {
+    "id": 178,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "PlayWorldSound": {
+    "id": 179,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "StopSound": {
+    "id": 180,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "PlaySoundEveryPlayer": {
+    "id": 181,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "Statistics": {
+    "id": 182,
+    "reliability": "UnreliableSequenced",
+    "channel": 0,
+    "priority": 3,
+    "capability": "GetStatistic",
+    "handling": 3
+  },
+  "ScoreboardUpdate": {
+    "id": 183,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "Weather": {
+    "id": 184,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "StartRain": {
+    "id": 185,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "StopRain": {
+    "id": 186,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "ClimateManagerPacket": {
+    "id": 187,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "ClimateManager",
+    "handling": 3
+  },
+  "SyncPuddles": {
+    "id": 188,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "IsoRegionServerPacket": {
+    "id": 189,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "IsoRegionClientRequestFullUpdate": {
+    "id": 190,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "SyncNonPvpZone": {
+    "id": 191,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "CanSetupNonPVPZone",
+    "handling": 3
+  },
+  "SyncThumpable": {
+    "id": 192,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "SyncIsoObject": {
+    "id": 193,
+    "reliability": "Reliable",
+    "channel": 3,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "ClientCommand": {
+    "id": 194,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "ObjectModData": {
+    "id": 195,
+    "reliability": "ReliableOrdered",
+    "channel": 1,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "ObjectChange": {
+    "id": 196,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "BloodSplatter": {
+    "id": 197,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "ZombieDescriptors": {
+    "id": 198,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "StartFire": {
+    "id": 199,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "StopFire": {
+    "id": 200,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "UpdateItemSprite": {
+    "id": 201,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "SendCustomColor": {
+    "id": 202,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "SyncCompost": {
+    "id": 203,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "GetModData": {
+    "id": 204,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "SyncPerks": {
+    "id": 205,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "SyncEquippedRadioFreq": {
+    "id": 206,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "UpdateOverlaySprite": {
+    "id": 207,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "AddAlarm": {
+    "id": 208,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "ChangeTextColor": {
+    "id": 209,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "SyncCustomLightSettings": {
+    "id": 210,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "ChunkObjectStateResponse": {
+    "id": 211,
+    "reliability": "Reliable",
+    "channel": 3,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "ChunkObjectStateRequest": {
+    "id": 212,
+    "reliability": "Reliable",
+    "channel": 3,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "StartFishSplash": {
+    "id": 213,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "FishingData": {
+    "id": 214,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "ToxicBuilding": {
+    "id": 215,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "AddItemInInventory": {
+    "id": 216,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "PlayerInventory": {
+    "id": 217,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "InspectPlayerInventory",
+    "handling": 3
+  },
+  "ExtraInfo": {
+    "id": 218,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "Teleport": {
+    "id": 219,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 0,
+    "capability": "TeleportToCoordinates",
+    "handling": 3
+  },
+  "InvMngReqItem": {
+    "id": 220,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "InspectPlayerInventory",
+    "handling": 3
+  },
+  "InvMngGetItem": {
+    "id": 221,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "InvMngRemoveItem": {
+    "id": 222,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "InspectPlayerInventory",
+    "handling": 3
+  },
+  "InvMngUpdateItem": {
+    "id": 223,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "InspectPlayerInventory",
+    "handling": 1
+  },
+  "ChangePlayerStats": {
+    "id": 224,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "CanSeePlayersStats",
+    "handling": 3
+  },
+  "NetworkUsers": {
+    "id": 225,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "SeeNetworkUsers",
+    "handling": 2
+  },
+  "PVPEvents": {
+    "id": 226,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "PVPLogTool",
+    "handling": 3
+  },
+  "RequestNetworkUsers": {
+    "id": 227,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "SeeNetworkUsers",
+    "handling": 1
+  },
+  "NetworkUserAction": {
+    "id": 228,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "ModifyNetworkUsers",
+    "handling": 1
+  },
+  "BanUnbanUserAction": {
+    "id": 229,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "BanUnbanUser",
+    "handling": 1
+  },
+  "TeleportUserAction": {
+    "id": 230,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "TeleportPlayerToAnotherPlayer",
+    "handling": 1
+  },
+  "TeleportToHimUserAction": {
+    "id": 231,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "TeleportToPlayer",
+    "handling": 1
+  },
+  "Roles": {
+    "id": 232,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "RequestRoles": {
+    "id": 233,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "RolesRead",
+    "handling": 1
+  },
+  "RolesEdit": {
+    "id": 234,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "RolesWrite",
+    "handling": 1
+  },
+  "RequestUserLog": {
+    "id": 235,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "ReadUserLog",
+    "handling": 3
+  },
+  "AddUserlog": {
+    "id": 236,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "AddUserlog",
+    "handling": 1
+  },
+  "RemoveUserlog": {
+    "id": 237,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "WorkWithUserlog",
+    "handling": 1
+  },
+  "AddWarningPoint": {
+    "id": 238,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "AddUserlog",
+    "handling": 1
+  },
+  "ConstructedZone": {
+    "id": 239,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "RegisterZone": {
+    "id": 240,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "SyncZone": {
+    "id": 241,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "FactionInvite": {
+    "id": 242,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "FactionAccept": {
+    "id": 243,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "FactionRemoveMember": {
+    "id": 244,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "FactionChangeOwner": {
+    "id": 245,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "FactionChangeTag": {
+    "id": 246,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "FactionChangeTitle": {
+    "id": 247,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "FactionDisband": {
+    "id": 248,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "FactionCreate": {
+    "id": 249,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "FactionSync": {
+    "id": 250,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "FactionStats": {
+    "id": 251,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 3,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "AddTicket": {
+    "id": 252,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "ViewedTicket": {
+    "id": 253,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "AnswerTickets",
+    "handling": 1
+  },
+  "ViewTickets": {
+    "id": 254,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "RemoveTicket": {
+    "id": 255,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "AnswerTickets",
+    "handling": 1
+  },
+  "ViewBannedIPs": {
+    "id": 256,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "BanUnbanUser",
+    "handling": 3
+  },
+  "ViewBannedSteamIDs": {
+    "id": 257,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "BanUnbanUser",
+    "handling": 3
+  },
+  "RequestTrading": {
+    "id": 258,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "TradingUIAddItem": {
+    "id": 259,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "TradingUIRemoveItem": {
+    "id": 260,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "TradingUIUpdateState": {
+    "id": 261,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "WarStateSync": {
+    "id": 262,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "WarSync": {
+    "id": 263,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "InitPlayerChat": {
+    "id": 264,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "PlayerJoinChat": {
+    "id": 265,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "PlayerLeaveChat": {
+    "id": 266,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "ChatMessageFromPlayer": {
+    "id": 267,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "ChatMessageToPlayer": {
+    "id": 268,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "PlayerStartPMChat": {
+    "id": 269,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "AddChatTab": {
+    "id": 270,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "RemoveChatTab": {
+    "id": 271,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "PlayerConnectedToChat": {
+    "id": 272,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "PlayerNotFound": {
+    "id": 273,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "SafehouseInvite": {
+    "id": 274,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "SafehouseAccept": {
+    "id": 275,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "SafehouseChangeMember": {
+    "id": 276,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "SafehouseChangeOwner": {
+    "id": 277,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "SafehouseChangeRespawn": {
+    "id": 278,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "SafehouseChangeTitle": {
+    "id": 279,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "SafehouseRelease": {
+    "id": 280,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "SafehouseClaim": {
+    "id": 281,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "SafezoneClaim": {
+    "id": 282,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "CanSetupSafehouses",
+    "handling": 1
+  },
+  "SafehouseSync": {
+    "id": 283,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "PopmanDebugCommand": {
+    "id": 284,
+    "reliability": "Unreliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "ConnectWithDebug",
+    "handling": 3
+  },
+  "ServerDebugInfo": {
+    "id": 285,
+    "reliability": "Unreliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "ConnectWithDebug",
+    "handling": 3
+  },
+  "ServerLOS": {
+    "id": 286,
+    "reliability": "Unreliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "ConnectWithDebug",
+    "handling": 3
+  },
+  "WaveSignal": {
+    "id": 287,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "PlayerListensChannel": {
+    "id": 288,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 1
+  },
+  "RadioServerData": {
+    "id": 289,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "RadioDeviceDataState": {
+    "id": 290,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "RadioPostSilenceEvent": {
+    "id": 291,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "SyncRadioData": {
+    "id": 292,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 0,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "BodyPartSync": {
+    "id": 293,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  },
+  "DebugStory": {
+    "id": 294,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 2,
+    "capability": "CreateStory",
+    "handling": 1
+  },
+  "SendItemListNet": {
+    "id": 295,
+    "reliability": "Reliable",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "GameEntity": {
+    "id": 296,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 3
+  },
+  "SyncEntityResource": {
+    "id": 297,
+    "reliability": "ReliableOrdered",
+    "channel": 0,
+    "priority": 1,
+    "capability": "LoginOnServer",
+    "handling": 2
+  }
+}

@@ -1,0 +1,16 @@
+[package]
+name = "layline-network"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+raknet-v6 = { workspace = true }
+tracing = { workspace = true }
+tokio = { workspace = true }
+crossbeam-queue = { workspace = true }
+bytes = { workspace = true }
+dashmap = { workspace = true }
+layline-codec = { workspace = true }
+
+[dev-dependencies]
+layline-packets = { workspace = true }
