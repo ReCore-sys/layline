@@ -8,6 +8,7 @@ use glam::Vec3A;
 use layline_shared::locations::Location;
 use layline_shared::profession::Profession;
 use std::path::PathBuf;
+use layline_shared::paths::get_zomboid_install_dir;
 
 type ProfessionSpawnLocations = AHashMap<(Location, PathBuf), AHashMap<Profession, Vec<Vec3A>>>;
 
@@ -17,21 +18,7 @@ pub struct GameMap {
 
 impl GameMap {
     pub fn new() -> Result<Self, WorldError> {
-        let base_path = if let Some(path) = std::env::var_os("ZOMBOID_SERVER_INSTALL_PATH") {
-            path.into()
-        } else if let Ok(path) = std::env::current_dir() {
-            path
-        } else {
-            return Err(WorldError::InvalidGameLocation(
-                std::env::current_dir().unwrap_or_default(),
-            ));
-        };
-        if ![base_path.join("media"), base_path.join("java"), base_path.join("jre64")]
-            .iter()
-            .all(|p| p.exists())
-        {
-            return Err(WorldError::InvalidGameLocation(base_path));
-        };
+        let base_path = get_zomboid_install_dir()?;
 
         Ok(GameMap {
             spawn_locations: load_spawn_locations(base_path)?,

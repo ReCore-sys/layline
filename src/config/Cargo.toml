@@ -1,0 +1,11 @@
+[package]
+name = "layline-config"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+layline-shared = { workspace = true }
+clap = { workspace = true }
+serde_ini = { workspace = true }
+serde-flexible = { workspace = true }

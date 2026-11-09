@@ -7,6 +7,7 @@ use layline_lua::load_layline_lua;
 use layline_shared::locations::Location;
 use layline_shared::profession::Profession;
 use crate::error::WorldError;
+use crate::error::WorldError::SharedError;
 use crate::ProfessionSpawnLocations;
 
 // TODO: Load this off the configured spawn points lua file instead of just loading every spawn points file
@@ -19,10 +20,8 @@ pub(crate) fn load_spawn_locations(installation_path: PathBuf) -> Result<Profess
 
     let mut counter = 0;
 
+    // The maps dir is already checked to exist in get_zomboid_install_dir, so we can just read it here
     let maps_dir = installation_path.join("media").join("maps");
-    if !maps_dir.exists() {
-        return Err(WorldError::InvalidGameLocation(installation_path));
-    }
     for entry in std::fs::read_dir(maps_dir)? {
         let entry = entry?;
         if !entry.file_type()?.is_dir() {

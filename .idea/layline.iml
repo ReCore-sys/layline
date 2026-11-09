@@ -19,6 +19,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/network/packets/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/shared/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/world/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/config/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

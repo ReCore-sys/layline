@@ -13,6 +13,8 @@ mlua = { workspace = true }
 hecs = { workspace = true }
 layline-components = { workspace = true }
 layline-world = { workspace = true }
+layline-config = { workspace = true }
+layline-shared = { workspace = true }
 
 [build-dependencies]
 syn = { workspace = true }

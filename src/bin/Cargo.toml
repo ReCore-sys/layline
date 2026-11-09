@@ -7,3 +7,5 @@ edition = "2024"
 layline-logging = { workspace = true }
 tracing = { workspace = true }
 layline-game-loop = { workspace = true }
+layline-config = { workspace = true }
+clap = { workspace = true }

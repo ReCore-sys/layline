@@ -11,7 +11,7 @@ members = [
     "src/macros",
     "src/components",
     "src/world"
-, "src/shared", "src/lua"]
+, "src/shared", "src/lua", "src/config"]
 
 [workspace.package]
 version = "0.1.0"
@@ -33,6 +33,7 @@ layline-components = { path = "src/components" }
 layline-world = { path = "src/world" }
 layline-shared = { path = "src/shared" }
 layline-lua = { path = "src/lua" }
+layline-config = { path = "src/config" }
 
 
 # Async
@@ -66,7 +67,9 @@ tracing-subscriber = "0.3.23"
 
 # Serialization
 serde_json = "1.0.154"
-serde = "1.0.229"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_ini = "0.2.0"
+serde-flexible = "0.1.1"
 
 # Macros
 strum = "0.28.0"
@@ -81,3 +84,6 @@ proc-macro2 = "1.0.107"
 # Data structures
 crossbeam-queue = "0.3.14"
 dashmap = "7.0.0-rc2"
+
+# CLI
+clap = { version = "4.6.7", features = ["derive", "help", "env", "color"] }
