@@ -14,6 +14,14 @@ struct Empty;
 #[derive(Debug, PartialEq, layline_macros::NetEncode, layline_macros::NetDecode)]
 struct Wrapper(i16, String);
 
+#[derive(Debug, PartialEq, layline_macros::NetEncode, layline_macros::NetDecode)]
+struct Conditional {
+    has_value: bool,
+    #[conditional(has_value)]
+    value: Option<i16>,
+    tail: u8,
+}
+
 #[test]
 fn fields_are_encoded_in_declaration_order() {
     let sample = Sample {
@@ -53,4 +61,32 @@ fn truncated_input_fails_to_decode() {
 fn empty_structs_use_no_bytes() {
     assert!(Empty.encode().is_empty());
     assert_eq!(Empty::decode(&mut Bytes::new()), Some(Empty));
+}
+
+#[test]
+fn conditional_fields_are_omitted_when_the_selector_is_false() {
+    let packet = Conditional {
+        has_value: false,
+        value: None,
+        tail: 4,
+    };
+
+    assert_eq!(packet.encode(), Bytes::from_static(b"\x00\x04"));
+    let mut bytes = packet.encode();
+    assert_eq!(Conditional::decode(&mut bytes), Some(packet));
+    assert!(bytes.is_empty());
+}
+
+#[test]
+fn conditional_fields_are_encoded_when_the_selector_is_true() {
+    let packet = Conditional {
+        has_value: true,
+        value: Some(0x1234),
+        tail: 4,
+    };
+
+    assert_eq!(packet.encode(), Bytes::from_static(b"\x01\x12\x34\x04"));
+    let mut bytes = packet.encode();
+    assert_eq!(Conditional::decode(&mut bytes), Some(packet));
+    assert!(bytes.is_empty());
 }

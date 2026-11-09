@@ -27,9 +27,9 @@ messages. See [Networking](index.md) for the application header and
    player's online ID. No in-world player has been registered yet.
 4. The server sends zero or more [SpawnRegion](packets/spawn-region.md)
    (`0x0073`) packets containing an index and a serialized Lua table, followed
-   by connection details carried in `RequestData` (`0x0029`). These contain the
-   slot, role, map, mods, spawn location, server and sandbox options, game time
-   and other world data.
+   by connection details carried in [RequestData](packets/request-data.md)
+   (`0x0029`). These contain the slot, role, map, mods, spawn location, server
+   and sandbox options, game time and other world data.
    The client processes the details and checks required mods before proceeding.
 
 The server issues spawn-region packets before connection details, but both use
@@ -40,11 +40,11 @@ separate connection path and does not perform login.
 ## 2. Load or choose a character
 
 After processing connection details, the normal client checks for a saved
-character. `LoadPlayerProfile` (`0x0004`) exchanges a player index for a profile
-response. A response says whether the profile exists; if it does, it also
-contains position, world version, dead status, username and serialized
-character data. The client requests subsequent indexes while profiles exist,
-until a response says no profile exists.
+character. [LoadPlayerProfile](packets/load-player-profile.md) (`0x0004`)
+exchanges a player index for a profile response. A response says whether the
+profile exists; if it does, it also contains position, world version, dead
+status, username and serialized character data. The client requests subsequent
+indexes while profiles exist, until a response says no profile exists.
 
 An existing live primary character can be used for loading. Otherwise, the
 client presents spawn and character-creation screens. Profile data may already

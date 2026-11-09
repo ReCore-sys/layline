@@ -1,13 +1,13 @@
 pub mod error;
 pub mod load_spawn_locations;
 
-use std::path::{Path, PathBuf};
 use crate::error::WorldError;
+use crate::load_spawn_locations::load_spawn_locations;
 use ahash::AHashMap;
 use glam::Vec3A;
 use layline_shared::locations::Location;
 use layline_shared::profession::Profession;
-use crate::load_spawn_locations::load_spawn_locations;
+use std::path::PathBuf;
 
 type ProfessionSpawnLocations = AHashMap<(Location, PathBuf), AHashMap<Profession, Vec<Vec3A>>>;
 

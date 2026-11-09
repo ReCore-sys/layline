@@ -38,6 +38,8 @@ decoder.
 | Packet | ID | Direction | Description |
 | --- | --- | --- | --- |
 | [Login](packets/login.md) | `0x0001` | Client to server | Account login and version information |
+| [LoadPlayerProfile](packets/load-player-profile.md) | `0x0004` | Both | Request a player profile or report its availability |
+| [RequestData](packets/request-data.md) | `0x0029` | Both | Request or transfer connection and world data |
 | [AccessDenied](packets/rejected.md) | `0x0064` | Server to client | Login rejection reason |
 | [Ping](packets/ping.md) | `0x0072` | Both | Server-list connection and player-limit query |
 | [SpawnRegion](packets/spawn-region.md) | `0x0073` | Server to client | Spawn-region index and serialized Lua table |

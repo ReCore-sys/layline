@@ -6,7 +6,11 @@ use proc_macro::TokenStream;
 use syn::{DeriveInput, ItemFn, parse_macro_input};
 
 /// Encodes each field in declaration order using its `NetEncode` implementation.
-#[proc_macro_derive(NetEncode)]
+///
+/// Fields marked `#[conditional(flag)]` are encoded only when the earlier `flag`
+/// field is true. Conditional fields must be `Option<T>` and contain `Some` when
+/// their condition is true.
+#[proc_macro_derive(NetEncode, attributes(conditional))]
 pub fn derive_net_encode(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     codec::encode(input)
@@ -15,7 +19,10 @@ pub fn derive_net_encode(input: TokenStream) -> TokenStream {
 }
 
 /// Decodes each field in declaration order using its `NetDecode` implementation.
-#[proc_macro_derive(NetDecode)]
+///
+/// Fields marked `#[conditional(flag)]` are decoded only when the earlier `flag`
+/// field is true; otherwise, they are set to `None`.
+#[proc_macro_derive(NetDecode, attributes(conditional))]
 pub fn derive_net_decode(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     codec::decode(input)
