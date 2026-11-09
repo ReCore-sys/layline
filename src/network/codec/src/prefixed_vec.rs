@@ -5,7 +5,7 @@ use std::ops::{Deref, DerefMut};
 
 /// An integer type used to encode the number of items in a [`PrefixedVec`].
 ///
-/// The built-in implementations are `u8`, `u16` and `u32`.
+/// The built-in implementations are `u8`, `u16`, `i16`, `u32` and `i32`.
 pub trait LengthPrefix: NetEncode + NetDecode + Copy {
     /// Converts an item count to this prefix type, returning `None` if it does not fit.
     fn from_len(len: usize) -> Option<Self>;
@@ -30,7 +30,7 @@ macro_rules! impl_length_prefix {
     };
 }
 
-impl_length_prefix!(u8, u16, u32);
+impl_length_prefix!(u8, u16, i16, u32, i32);
 
 /// A vector whose item count is encoded before its items.
 ///
@@ -77,6 +77,12 @@ impl<T, L> From<Vec<T>> for PrefixedVec<T, L> {
 impl<T, L> From<PrefixedVec<T, L>> for Vec<T> {
     fn from(value: PrefixedVec<T, L>) -> Self {
         value.items
+    }
+}
+
+impl<T, L> Default for PrefixedVec<T, L> {
+    fn default() -> Self {
+        Self::new(Vec::new())
     }
 }
 

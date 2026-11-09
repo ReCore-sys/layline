@@ -1,8 +1,11 @@
 use crate::game_state::GameState;
 use layline_codec::lua::lua_table::NetworkLuaTable;
+use layline_codec::NetEncode;
 use layline_macros::handler;
 use layline_network::Connection;
 use layline_packets::inbound::login::Login;
+use layline_packets::outbound::connection_details::ConnectionDetails;
+use layline_packets::outbound::request_data::{RequestData, RequestDataId};
 use layline_packets::outbound::spawn_region::SpawnRegion;
 use layline_world::SpawnPointsFile;
 use tracing::{error, info, warn};
@@ -68,5 +71,27 @@ pub fn login(world: &mut GameState, connection: &Connection, packet: &mut Login)
             warn!("Failed to queue SpawnRegion {index}: {error}");
             return;
         }
+    }
+
+    let mut details = ConnectionDetails::default();
+    details.max_players = world.config.max_players;
+    if !world.config.map.is_empty() {
+        details.game_map = world.config.map.clone();
+    }
+
+    let payload = details.encode();
+    if payload.len() >= 1024 {
+        warn!(
+            "ConnectionDetails payload is {} bytes; RequestData part transfers are not implemented",
+            payload.len()
+        );
+        return;
+    }
+
+    if let Err(error) = connection.send(RequestData::full_data(
+        RequestDataId::ConnectionDetails,
+        payload,
+    )) {
+        warn!("Failed to queue ConnectionDetails: {error}");
     }
 }

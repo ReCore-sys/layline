@@ -19,7 +19,7 @@ fraction of the hardware is hard to dislike.
 
 ## Features
 
-- None (yet)
+- Selecting your spawn location and character
 
 ## Goals
 

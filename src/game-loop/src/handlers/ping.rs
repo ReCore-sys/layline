@@ -9,7 +9,7 @@ use layline_packets::inbound::ping::InboundPing;
 pub fn ping(state: &mut GameState, connection: &Connection, packet: &mut InboundPing) {
     let outbound_ping = layline_packets::outbound::ping::OutboundPing {
         server_ip: std::mem::take(&mut packet.server_ip),
-        max_connections: 99,
+        max_connections: state.config.max_players,
         connections: state
             .world
             .query::<With<&PlayerMarker, &bool>>()
