@@ -16,15 +16,26 @@ player index. The request and response use the same packet ID.
 
 ## Packet fields
 
-| Field                             | Type          | Description                                                                |
-|-----------------------------------|---------------|----------------------------------------------------------------------------|
-| Request: player index             | ¯\\\_(ツ)\_/¯ | Identifies the local player                                                |
-| Response: profile status and data | ¯\\\_(ツ)\_/¯ | Reports whether a saved profile exists; includes profile data when it does |
+| Field                           | Type       | Description                                                           |
+|---------------------------------|------------|-----------------------------------------------------------------------|
+| Request: player index           | `u8`       | Identifies the local player                                           |
+| Response: profile status        | `bool`     | `false` means no saved profile; `true` is followed by profile fields  |
+| Response: player index          | `u8`       | Echoes the requested local-player index                               |
+| Response: position              | `f32 × 3`  | `x`, `y`, and `z`; present only when a profile exists                 |
+| Response: world version         | `i32`      | Present only when a profile exists                                    |
+| Response: dead status           | `bool`     | Present only when a profile exists                                    |
+| Response: username              | UTF string | Present only when a profile exists                                    |
+| Response: character data length | `i32`      | Byte length of the serialized profile; present only when it exists    |
+| Response: character data        | `u8[]`     | Serialized profile bytes; present only when a profile exists          |
 
 When a profile exists, the response includes information such as the character's
 position, world version, dead status, username and serialized character data.
 The client checks subsequent player indexes while profiles exist; a response
 without a profile ends that search.
+
+For a server that does not persist characters, reply with `false` and the
+requested player index. This is a two-byte response (`00 <playerIndex>`), with
+no profile fields; it tells the client that no saved character is available.
 
 An existing live primary character can be used. Otherwise, the client proceeds
 to character creation and spawn selection. Profile data may be cached, so this

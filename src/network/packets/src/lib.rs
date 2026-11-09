@@ -5,15 +5,37 @@ pub mod registry;
 #[cfg(test)]
 mod tests {
     use super::*;
-    use inbound::{login::Login, ping::InboundPing};
+    use inbound::{
+        load_player_profile::LoadPlayerProfile,
+        login::Login,
+        ping::InboundPing,
+    };
     use layline_codec::{Packet, Reliability};
-    use outbound::{ping::OutboundPing, rejected::Rejected, request_data::RequestData};
+    use outbound::{
+        load_player_profile::LoadPlayerProfileResponse,
+        ping::OutboundPing,
+        rejected::Rejected,
+        request_data::RequestData,
+    };
 
     #[test]
     fn packet_transport_settings_match_protocol() {
         assert_eq!(Login::PACKET_ID, 0x0001);
         assert_eq!(Login::RELIABILITY, Reliability::ReliableOrdered);
         assert_eq!(Login::ORDERING_CHANNEL, 0);
+
+        assert_eq!(LoadPlayerProfile::PACKET_ID, 0x0004);
+        assert_eq!(
+            LoadPlayerProfile::RELIABILITY,
+            Reliability::ReliableOrdered
+        );
+        assert_eq!(LoadPlayerProfile::ORDERING_CHANNEL, 0);
+        assert_eq!(LoadPlayerProfileResponse::PACKET_ID, 0x0004);
+        assert_eq!(
+            LoadPlayerProfileResponse::RELIABILITY,
+            Reliability::ReliableOrdered
+        );
+        assert_eq!(LoadPlayerProfileResponse::ORDERING_CHANNEL, 0);
 
         assert_eq!(InboundPing::PACKET_ID, 0x0072);
         assert_eq!(InboundPing::RELIABILITY, Reliability::Unreliable);

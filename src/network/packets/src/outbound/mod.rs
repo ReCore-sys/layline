@@ -1,4 +1,5 @@
 pub mod connection_details;
+pub mod load_player_profile;
 pub mod ping;
 pub mod rejected;
 pub mod request_data;
