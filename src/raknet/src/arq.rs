@@ -80,6 +80,10 @@ impl Reliability {
         *self as u8
     }
 
+    pub(crate) fn can_fragment(self) -> bool {
+        matches!(self, Self::Reliable | Self::ReliableOrdered)
+    }
+
     pub fn from(flags: u8) -> Result<Self> {
         Self::try_from(flags)
     }
@@ -1141,7 +1145,7 @@ impl SendQ {
             .checked_sub(60)
             .filter(|n| *n > 0)
             .ok_or(RaknetError::PacketSizeExceedMTU)?;
-        let frames = if reliability == Reliability::ReliableOrdered && len > payload {
+        let frames = if reliability.can_fragment() && len > payload {
             let frames = len.div_ceil(payload);
             if frames > crate::fragment::MAX_FRAGMENTS {
                 return Err(RaknetError::PacketSizeExceedMTU);
@@ -1285,78 +1289,8 @@ impl SendQ {
                 #[cfg(not(feature = "send-policy"))]
                 self.packets.push_back(frame);
             }
-            Reliability::Reliable => {
-                if buf.len() > max_payload {
-                    return Err(RaknetError::PacketSizeExceedMTU);
-                }
-
-                let mut frame = FrameSetPacket::from_payload(
-                    reliability,
-                    owned.map_or_else(
-                        || FramePayload::copy_shared(buf),
-                        |data| FramePayload::Bytes(data.clone()),
-                    ),
-                );
-                frame.reliable_frame_index = self.reliable_frame_index;
-                self.packets.push_back(frame);
-                self.reliable_frame_index = sequence::next(self.reliable_frame_index);
-            }
-            Reliability::ReliableOrdered => {
-                if buf.len() <= max_payload {
-                    let mut frame = FrameSetPacket::from_payload(
-                        reliability,
-                        owned.map_or_else(
-                            || FramePayload::copy_shared(buf),
-                            |data| FramePayload::Bytes(data.clone()),
-                        ),
-                    );
-                    frame.order_channel = order_channel;
-                    frame.reliable_frame_index = self.reliable_frame_index;
-                    frame.ordered_frame_index = *self.ordered_frame_indexes.get_mut(order_channel);
-                    self.packets.push_back(frame);
-                    self.reliable_frame_index = sequence::next(self.reliable_frame_index);
-                } else {
-                    let compound_size = buf.len().div_ceil(max_payload);
-                    let compound_size = u32::try_from(compound_size)
-                        .map_err(|_| RaknetError::PacketSizeExceedMTU)?;
-                    let ordered_frame_index = *self.ordered_frame_indexes.get_mut(order_channel);
-
-                    let data: Option<Arc<[u8]>> = owned.is_none().then(|| Arc::from(buf));
-                    let shared_payload = Arc::new(SharedPayload {
-                        remaining: AtomicUsize::new(compound_size as usize),
-                        bytes: buf.len(),
-                    });
-                    for (fragment_index, chunk) in buf.chunks(max_payload).enumerate() {
-                        let start = fragment_index * max_payload;
-                        let mut frame = FrameSetPacket::from_payload(
-                            reliability,
-                            match owned {
-                                Some(data) => {
-                                    FramePayload::Bytes(data.slice(start..start + chunk.len()))
-                                }
-                                None => FramePayload::Shared {
-                                    owner: data.as_ref().unwrap().clone(),
-                                    start: start as u32,
-                                    length: chunk.len() as u16,
-                                },
-                            },
-                        );
-                        frame.shared_payload = Some(shared_payload.clone());
-                        frame.flags |= 16;
-                        frame.compound_size = compound_size;
-                        frame.compound_id = self.compound_id;
-                        frame.fragment_index = fragment_index as u32;
-                        frame.order_channel = order_channel;
-                        frame.reliable_frame_index = self.reliable_frame_index;
-                        frame.ordered_frame_index = ordered_frame_index;
-                        self.packets.push_back(frame);
-                        self.reliable_frame_index = sequence::next(self.reliable_frame_index);
-                    }
-                    self.compound_id = self.compound_id.wrapping_add(1);
-                }
-                let index = self.ordered_frame_indexes.get_mut(order_channel);
-                *index = sequence::next(*index);
-                *self.sequenced_frame_indexes.get_mut(order_channel) = 0;
+            Reliability::Reliable | Reliability::ReliableOrdered => {
+                self.insert_reliable_payload(reliability, buf, order_channel, owned, max_payload)?;
             }
             Reliability::ReliableSequenced => {
                 if buf.len() > max_payload {
@@ -1392,6 +1326,79 @@ impl SendQ {
             Reliability::Unreliable | Reliability::UnreliableSequenced
         ) {
             self.queued_unreliable += 1;
+        }
+        Ok(())
+    }
+
+    fn insert_reliable_payload(
+        &mut self,
+        reliability: Reliability,
+        buf: &[u8],
+        order_channel: u8,
+        owned: Option<&bytes::Bytes>,
+        max_payload: usize,
+    ) -> Result<()> {
+        let ordered_frame_index = (reliability == Reliability::ReliableOrdered)
+            .then_some(self.ordered_frame_indexes.get(order_channel));
+
+        if buf.len() <= max_payload {
+            let mut frame = FrameSetPacket::from_payload(
+                reliability,
+                owned.map_or_else(
+                    || FramePayload::copy_shared(buf),
+                    |data| FramePayload::Bytes(data.clone()),
+                ),
+            );
+            frame.reliable_frame_index = self.reliable_frame_index;
+            if let Some(index) = ordered_frame_index {
+                frame.order_channel = order_channel;
+                frame.ordered_frame_index = index;
+            }
+            self.packets.push_back(frame);
+            self.reliable_frame_index = sequence::next(self.reliable_frame_index);
+        } else {
+            let compound_size = buf.len().div_ceil(max_payload);
+            let compound_size =
+                u32::try_from(compound_size).map_err(|_| RaknetError::PacketSizeExceedMTU)?;
+            let data: Option<Arc<[u8]>> = owned.is_none().then(|| Arc::from(buf));
+            let shared_payload = Arc::new(SharedPayload {
+                remaining: AtomicUsize::new(compound_size as usize),
+                bytes: buf.len(),
+            });
+
+            for (fragment_index, chunk) in buf.chunks(max_payload).enumerate() {
+                let start = fragment_index * max_payload;
+                let mut frame = FrameSetPacket::from_payload(
+                    reliability,
+                    match owned {
+                        Some(data) => FramePayload::Bytes(data.slice(start..start + chunk.len())),
+                        None => FramePayload::Shared {
+                            owner: data.as_ref().unwrap().clone(),
+                            start: start as u32,
+                            length: chunk.len() as u16,
+                        },
+                    },
+                );
+                frame.shared_payload = Some(shared_payload.clone());
+                frame.flags |= 16;
+                frame.compound_size = compound_size;
+                frame.compound_id = self.compound_id;
+                frame.fragment_index = fragment_index as u32;
+                frame.reliable_frame_index = self.reliable_frame_index;
+                if let Some(index) = ordered_frame_index {
+                    frame.order_channel = order_channel;
+                    frame.ordered_frame_index = index;
+                }
+                self.packets.push_back(frame);
+                self.reliable_frame_index = sequence::next(self.reliable_frame_index);
+            }
+            self.compound_id = self.compound_id.wrapping_add(1);
+        }
+
+        if reliability == Reliability::ReliableOrdered {
+            let index = self.ordered_frame_indexes.get_mut(order_channel);
+            *index = sequence::next(*index);
+            *self.sequenced_frame_indexes.get_mut(order_channel) = 0;
         }
         Ok(())
     }
@@ -1882,7 +1889,7 @@ impl SendQ {
         let mut previous = None;
         let mut packable = false;
         let required = lengths.try_fold(0usize, |total, length| {
-            if reliability != Reliability::ReliableOrdered && length > max_payload {
+            if !reliability.can_fragment() && length > max_payload {
                 return Err(RaknetError::PacketSizeExceedMTU);
             }
             if allowed && !packable && length <= max_payload {
@@ -2878,6 +2885,24 @@ fn rejects_messages_exceeding_the_receivers_fragment_limit() {
         sendq.required_bytes(Reliability::ReliableOrdered, limit + 1),
         Err(RaknetError::PacketSizeExceedMTU)
     ));
+}
+
+#[test]
+fn reliable_unordered_messages_fragment_and_reassemble() {
+    let payload: Vec<u8> = (0..3000).map(|index| (index % 251) as u8).collect();
+    let mut send_queue = SendQ::new(1400);
+    send_queue.insert(Reliability::Reliable, &payload).unwrap();
+    let fragments = send_queue.packets.iter().cloned().collect::<Vec<_>>();
+    assert!(fragments.len() > 1);
+
+    let mut receive_queue = RecvQ::new();
+    for frame in fragments.into_iter().rev() {
+        receive_queue.insert(frame).unwrap();
+    }
+
+    let packets = receive_queue.flush(&"127.0.0.1:0".parse().unwrap());
+    assert_eq!(packets.len(), 1);
+    assert_eq!(packets[0].data.as_ref(), payload);
 }
 
 #[test]

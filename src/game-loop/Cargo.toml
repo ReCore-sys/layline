@@ -5,9 +5,11 @@ edition.workspace = true
 
 [dependencies]
 layline-network = { workspace = true }
+layline-codec = { workspace = true }
 layline-macros = { workspace = true }
 tracing = { workspace = true }
 layline-packets = { workspace = true }
+mlua = { workspace = true }
 hecs = { workspace = true }
 layline-components = { workspace = true }
 layline-world = { workspace = true }

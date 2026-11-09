@@ -58,8 +58,37 @@ impl Profession {
             "tailor" => Some(Profession::Tailor),
             "veteran" => Some(Profession::Veteran),
             "unemployed" => Some(Profession::Unemployed),
-            "veteran" => Some(Profession::Veteran),
             _ => None,
+        }
+    }
+
+    pub fn to_id(&self) -> &'static str {
+        match self {
+            Profession::Unemployed => "unemployed",
+            Profession::Blacksmith => "smither",
+            Profession::BurgerFlipper => "burgerflipper",
+            Profession::Burglar => "burglar",
+            Profession::Carpenter => "carpenter",
+            Profession::Chef => "chef",
+            Profession::ConstructionWorker => "constructionworker",
+            Profession::DIYExpert => "repairman",
+            Profession::Doctor => "doctor",
+            Profession::Electrician => "electrician",
+            Profession::Engineer => "engineer",
+            Profession::Farmer => "farmer",
+            Profession::Firefighter => "fireofficer",
+            Profession::FishingGuide => "fisherman",
+            Profession::FitnessInstructor => "fitnessInstructor",
+            Profession::Lumberjack => "lumberjack",
+            Profession::Mechanic => "mechanics",
+            Profession::Nurse => "nurse",
+            Profession::ParkRanger => "parkranger",
+            Profession::PoliceOfficer => "policeofficer",
+            Profession::Rancher => "rancher",
+            Profession::SecurityGuard => "securityguard",
+            Profession::Tailor => "tailor",
+            Profession::Veteran => "veteran",
+            Profession::Welder => "metalworker",
         }
     }
 }

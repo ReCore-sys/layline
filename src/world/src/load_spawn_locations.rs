@@ -7,8 +7,10 @@ use layline_lua::load_layline_lua;
 use layline_shared::locations::Location;
 use layline_shared::profession::Profession;
 use crate::error::WorldError;
+use crate::ProfessionSpawnLocations;
 
-pub(crate) fn load_spawn_locations(installation_path: PathBuf) -> Result<AHashMap<Location, AHashMap<Profession, Vec<Vec3A>>>, WorldError> {
+// TODO: Load this off the configured spawn points lua file instead of just loading every spawn points file
+pub(crate) fn load_spawn_locations(installation_path: PathBuf) -> Result<ProfessionSpawnLocations, WorldError> {
     let mut spawn_locations = AHashMap::new();
 
     let mut lua_rt = Lua::new();
@@ -33,13 +35,14 @@ pub(crate) fn load_spawn_locations(installation_path: PathBuf) -> Result<AHashMa
         if let Some(location) = Location::from_folder_name(&folder_name) {
             let spawn_locations_lua_path = entry.path().join("spawnpoints.lua");
             if spawn_locations_lua_path.exists() {
-                let lua_code = std::fs::read_to_string(spawn_locations_lua_path)?;
+                let lua_code = std::fs::read_to_string(spawn_locations_lua_path.clone())?;
                 // Run the code to put the function in the lua globals
                 lua_rt.load(&lua_code).exec()?;
                 let spawnpoints_fn: mlua::Function = lua_rt.globals().get("SpawnPoints")?;
                 let lua_table: mlua::Table = spawnpoints_fn.call(())?;
                 let as_map = parse_spawn_locations(lua_table, &mut counter)?;
-                spawn_locations.insert(location, as_map);
+                let relative_path = spawn_locations_lua_path.strip_prefix(&installation_path).unwrap_or(&spawn_locations_lua_path).to_path_buf();
+                spawn_locations.insert((location, relative_path), as_map);
             } else {
                 info!("No spawnpoints.lua found for {}", location);
             }

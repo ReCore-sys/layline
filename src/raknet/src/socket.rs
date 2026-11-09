@@ -1740,7 +1740,7 @@ impl RaknetSocket {
 
     /// Send an application message.
     ///
-    /// `ReliableOrdered` messages are fragmented
+    /// `Reliable` and `ReliableOrdered` messages are fragmented
     /// when necessary; other modes must fit the negotiated MTU. Messages exceeding
     /// 65,536 fragments or the 64 MiB send budget (including fragment overhead) return
     /// [`RaknetError::PacketSizeExceedMTU`]. A full send queue applies asynchronous
@@ -1876,7 +1876,7 @@ impl RaknetSocket {
                 queue.has_batch_capacity(reliability, lengths())?;
                 let mtu = usize::from(queue.mtu());
                 for length in lengths() {
-                    if reliability != Reliability::ReliableOrdered
+                    if !reliability.can_fragment()
                         && length > mtu.saturating_sub(60)
                     {
                         return Err(RaknetError::PacketSizeExceedMTU);
@@ -1897,7 +1897,7 @@ impl RaknetSocket {
             queue.has_batch_capacity(reliability, lengths())?;
             let mtu = usize::from(queue.mtu());
             for length in lengths() {
-                if reliability != Reliability::ReliableOrdered && length > mtu.saturating_sub(60) {
+                if !reliability.can_fragment() && length > mtu.saturating_sub(60) {
                     return Err(RaknetError::PacketSizeExceedMTU);
                 }
             }

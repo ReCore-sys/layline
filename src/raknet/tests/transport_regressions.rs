@@ -598,7 +598,7 @@ async fn batch_validation_is_atomic_and_receiving_never_waits_to_fill() {
         let oversized = vec![0xfe; 2000];
         assert!(
             client
-                .send_batch(&[&[0xfe, 2], &oversized], Reliability::Reliable)
+                .send_batch(&[&[0xfe, 2], &oversized], Reliability::ReliableSequenced)
                 .await
                 .is_err()
         );

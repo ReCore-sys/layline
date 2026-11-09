@@ -274,11 +274,13 @@ name = "layline-game-loop"
 version = "0.1.0"
 dependencies = [
  "hecs",
+ "layline-codec",
  "layline-components",
  "layline-macros",
  "layline-network",
  "layline-packets",
  "layline-world",
+ "mlua",
  "syn 3.0.9",
  "tracing",
 ]
@@ -330,8 +332,8 @@ version = "0.1.0"
 dependencies = [
  "bytes",
  "layline-codec",
+ "layline-lua",
  "layline-macros",
- "raknet-v6",
  "syn 3.0.9",
  "tracing",
 ]

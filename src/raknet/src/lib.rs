@@ -210,6 +210,32 @@ async fn test_send_recv_fragment_data() {
 }
 
 #[tokio::test]
+async fn test_send_recv_reliable_fragment_data() {
+    let mut server = RaknetListener::bind(&"127.0.0.1:0".parse().unwrap())
+        .await
+        .unwrap();
+    let local_addr = server.local_addr().unwrap();
+    server.listen().await;
+
+    let notify = std::sync::Arc::new(tokio::sync::Notify::new());
+    let notify2 = notify.clone();
+
+    let server_task = tokio::spawn(async move {
+        let client = server.accept().await.unwrap();
+        let payload = vec![0xfe; 3000];
+        client.send(&payload, Reliability::Reliable).await.unwrap();
+        notify2.notified().await;
+    });
+
+    let client = RaknetSocket::connect(&local_addr).await.unwrap();
+    assert_eq!(client.recv().await.unwrap(), vec![0xfe; 3000]);
+
+    notify.notify_one();
+    client.close().await.unwrap();
+    server_task.await.unwrap();
+}
+
+#[tokio::test]
 async fn test_send_recv_more_reliability_type_packet() {
     let mut server = RaknetListener::bind(&"127.0.0.1:0".parse().unwrap())
         .await

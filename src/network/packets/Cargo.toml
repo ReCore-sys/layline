@@ -8,7 +8,7 @@ layline-codec = { workspace = true }
 layline-macros = { workspace = true }
 bytes = { workspace = true }
 tracing = { workspace = true }
-raknet-v6 = { workspace = true }
+layline-lua = { workspace = true }
 
 [build-dependencies]
 syn = { workspace = true }

@@ -41,6 +41,41 @@ the table after the index; the client reads the index, loads a Kahlua table
 from the remaining packet data using world version `249`, and stores the
 result under that index.
 
+## Region table fields
+
+The serialized table is a region entry, not just its spawn-point coordinates.
+A sanitized 42.21.0 capture showed these top-level keys:
+
+| Key | Value | Purpose |
+| --- | --- | --- |
+| `name` | String | Region name shown when choosing a spawn region |
+| `file` | String | Path to the region's spawn-points Lua file |
+| `points` | Table | Profession-keyed spawn-point lists |
+
+Each profession in `points` maps to a 1-based array of point tables. The
+captured points used numeric `posX`, `posY`, and `posZ` coordinates; the source
+format permits `posZ` to be omitted. The captured structure has this shape:
+
+```text
+{
+    name: string,
+    file: string,
+    points: {
+        [profession: string]: {
+            [point_index: number]: {
+                posX: number,
+                posY: number,
+                posZ?: number,
+            },
+        },
+    },
+}
+```
+
+The actual coordinates and available professions come from the region's
+points file; see [Spawn points](../../world/spawn-points.md). These are
+capture-observed table fields, not additional fixed packet-header fields.
+
 ## Sequence and ordering
 
 After accepting a login, the server iterates region indexes from `1` through

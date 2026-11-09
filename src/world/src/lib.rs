@@ -1,6 +1,7 @@
 pub mod error;
 pub mod load_spawn_locations;
 
+use std::path::{Path, PathBuf};
 use crate::error::WorldError;
 use ahash::AHashMap;
 use glam::Vec3A;
@@ -8,13 +9,15 @@ use layline_shared::locations::Location;
 use layline_shared::profession::Profession;
 use crate::load_spawn_locations::load_spawn_locations;
 
+type ProfessionSpawnLocations = AHashMap<(Location, PathBuf), AHashMap<Profession, Vec<Vec3A>>>;
+
 pub struct GameMap {
-    pub spawn_locations: AHashMap<Location, AHashMap<Profession, Vec<Vec3A>>>,
+    pub spawn_locations: ProfessionSpawnLocations,
 }
 
 impl GameMap {
     pub fn new() -> Result<Self, WorldError> {
-        let path = if let Some(path) = std::env::var_os("ZOMBOID_SERVER_INSTALL_PATH") {
+        let base_path = if let Some(path) = std::env::var_os("ZOMBOID_SERVER_INSTALL_PATH") {
             path.into()
         } else if let Ok(path) = std::env::current_dir() {
             path
@@ -23,15 +26,15 @@ impl GameMap {
                 std::env::current_dir().unwrap_or_default(),
             ));
         };
-        if ![path.join("media"), path.join("java"), path.join("jre64")]
+        if ![base_path.join("media"), base_path.join("java"), base_path.join("jre64")]
             .iter()
             .all(|p| p.exists())
         {
-            return Err(WorldError::InvalidGameLocation(path));
+            return Err(WorldError::InvalidGameLocation(base_path));
         };
 
         Ok(GameMap {
-            spawn_locations: load_spawn_locations(path)?,
+            spawn_locations: load_spawn_locations(base_path)?,
         })
     }
 }
