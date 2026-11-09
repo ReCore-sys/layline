@@ -32,6 +32,13 @@ map directory name becomes the region name and the file path is
 The region list is separate from the points file. On connection, the server
 sends each region's index and serialized Lua table to the client.
 
+Layline reads `Server/<save_name>_spawnregions.lua` from the Zomboid user
+directory and loads only the point files listed by its `SpawnRegions()`
+function. A `file` path is resolved from the game installation directory; a
+`serverfile` path is resolved from the `Server` directory. This supports
+save-specific files such as `<save_name>_spawnpoints.lua` while keeping the
+region's configured name and file reference in the packet.
+
 ## Spawn-points files
 
 A points file defines `SpawnPoints()` and returns a table keyed by profession.

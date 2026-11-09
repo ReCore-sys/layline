@@ -4,6 +4,7 @@ use layline_macros::handler;
 use layline_network::Connection;
 use layline_packets::inbound::login::Login;
 use layline_packets::outbound::spawn_region::SpawnRegion;
+use layline_world::SpawnPointsFile;
 use tracing::{error, info, warn};
 
 #[handler]
@@ -11,33 +12,22 @@ pub fn login(world: &mut GameState, connection: &Connection, packet: &mut Login)
     info!("Login packet received from {}", packet.username);
 
     let lua = mlua::Lua::new();
-    let mut regions = world
-        .map
-        .spawn_locations
-        .iter()
-        .collect::<Vec<_>>();
-    regions.sort_by(|(left, _), (right, _)| left.1.cmp(&right.1));
-
-    for (region_offset, ((_, path), profession_points)) in regions.into_iter().enumerate() {
-        let Some(region_name) = path
-            .parent()
-            .and_then(|parent| parent.file_name())
-            .and_then(|name| name.to_str())
-        else {
-            error!("Could not determine spawn region name from {}", path.display());
-            return;
-        };
-        let file = format!("media/maps/{region_name}/spawnpoints.lua");
-
-        info!("Sending spawn region {region_offset} ({region_name}) to {}", packet.username);
+    for (region_offset, spawn_region) in world.map.spawn_locations.iter().enumerate() {
+        info!(
+            "Sending spawn region {region_offset} ({}) to {}",
+            spawn_region.name, packet.username
+        );
 
         let table = (|| -> mlua::Result<NetworkLuaTable> {
             let region = lua.create_table()?;
-            region.set("name", region_name)?;
-            region.set("file", file)?;
+            region.set("name", spawn_region.name.as_str())?;
+            match &spawn_region.file {
+                SpawnPointsFile::File(file) => region.set("file", file.as_str())?,
+                SpawnPointsFile::ServerFile(file) => region.set("serverfile", file.as_str())?,
+            }
 
             let points = lua.create_table()?;
-            for (profession, spawn_points) in profession_points {
+            for (profession, spawn_points) in &spawn_region.profession_points {
                 let profession_points = lua.create_table()?;
                 for (point_offset, spawn_point) in spawn_points.iter().enumerate() {
                     let point = lua.create_table()?;
@@ -59,8 +49,8 @@ pub fn login(world: &mut GameState, connection: &Connection, packet: &mut Login)
             Ok(table) => table,
             Err(error) => {
                 error!(
-                    "Failed to build spawn region from {}: {error}",
-                    path.display()
+                    "Failed to build spawn region {}: {error}",
+                    spawn_region.name
                 );
                 return;
             }

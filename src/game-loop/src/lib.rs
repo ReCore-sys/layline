@@ -38,7 +38,7 @@ pub fn start_game_loop(cli_args: layline_config::cli_args::CLIArgs) {
 
     info!("Loaded config successfully. Starting game loop with save: {}", cli_args.save_name);
 
-    let map = match GameMap::new() {
+    let map = match GameMap::new(&cli_args.save_name) {
         Ok(map) => map,
         Err(e) => {
             error!("Failed to create game map: {}", e);

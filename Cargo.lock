@@ -473,8 +473,6 @@ dependencies = [
  "layline-lua",
  "layline-shared",
  "mlua",
- "serde",
- "serde_json",
  "thiserror",
  "tracing",
 ]
