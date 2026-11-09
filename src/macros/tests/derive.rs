@@ -22,6 +22,21 @@ struct Conditional {
     tail: u8,
 }
 
+#[derive(Debug, PartialEq, layline_macros::NetEncode, layline_macros::NetDecode)]
+#[starting_index = 1]
+enum Fieldless {
+    First,
+    Second,
+}
+
+#[derive(Debug, PartialEq, layline_macros::NetEncode, layline_macros::NetDecode)]
+enum Message {
+    Empty,
+    Tuple(u8, String),
+    Named { value: u16 },
+    Nested(Wrapper),
+}
+
 #[test]
 fn fields_are_encoded_in_declaration_order() {
     let sample = Sample {
@@ -89,4 +104,35 @@ fn conditional_fields_are_encoded_when_the_selector_is_true() {
     let mut bytes = packet.encode();
     assert_eq!(Conditional::decode(&mut bytes), Some(packet));
     assert!(bytes.is_empty());
+}
+
+#[test]
+fn fieldless_enum_indices_start_at_the_configured_value() {
+    let mut first = Fieldless::First.encode();
+    assert_eq!(first, Bytes::from_static(b"\x01"));
+    assert_eq!(Fieldless::decode(&mut first), Some(Fieldless::First));
+
+    let mut second = Fieldless::Second.encode();
+    assert_eq!(second, Bytes::from_static(b"\x02"));
+    assert_eq!(Fieldless::decode(&mut second), Some(Fieldless::Second));
+
+    assert_eq!(Fieldless::decode(&mut Bytes::from_static(b"\x00")), None);
+}
+
+#[test]
+fn enum_variants_encode_tags_and_payloads_in_declaration_order() {
+    let values = [
+        (Message::Empty, b"\x00".as_slice()),
+        (Message::Tuple(7, "x".to_string()), b"\x01\x07\x00\x01x"),
+        (Message::Named { value: 0x1234 }, b"\x02\x12\x34"),
+        (Message::Nested(Wrapper(9, "x".to_string())), b"\x03\x00\x09\x00\x01x"),
+    ];
+
+    for (value, expected) in values {
+        let encoded = value.encode();
+        assert_eq!(encoded, Bytes::from_static(expected));
+        let mut bytes = encoded;
+        assert_eq!(Message::decode(&mut bytes), Some(value));
+        assert!(bytes.is_empty());
+    }
 }

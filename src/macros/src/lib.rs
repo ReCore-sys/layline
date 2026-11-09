@@ -10,7 +10,9 @@ use syn::{DeriveInput, ItemFn, parse_macro_input};
 /// Fields marked `#[conditional(flag)]` are encoded only when the earlier `flag`
 /// field is true. Conditional fields must be `Option<T>` and contain `Some` when
 /// their condition is true.
-#[proc_macro_derive(NetEncode, attributes(conditional))]
+/// Enums are encoded with a `u8` variant tag followed by the variant's fields.
+/// Use `#[starting_index = N]` to set the first variant tag; the default is 0.
+#[proc_macro_derive(NetEncode, attributes(conditional, starting_index))]
 pub fn derive_net_encode(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     codec::encode(input)
@@ -22,7 +24,9 @@ pub fn derive_net_encode(input: TokenStream) -> TokenStream {
 ///
 /// Fields marked `#[conditional(flag)]` are decoded only when the earlier `flag`
 /// field is true; otherwise, they are set to `None`.
-#[proc_macro_derive(NetDecode, attributes(conditional))]
+/// Enums are decoded from a `u8` variant tag followed by the variant's fields.
+/// Use `#[starting_index = N]` to set the first variant tag; the default is 0.
+#[proc_macro_derive(NetDecode, attributes(conditional, starting_index))]
 pub fn derive_net_decode(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     codec::decode(input)
