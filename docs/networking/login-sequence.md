@@ -47,8 +47,9 @@ mean no request is needed.
 
 ## 3. Enter the loading queue
 
-The client sends `LoginQueueRequest` (`0x0002`) with no payload when entering
-the loading queue state. The server replies using the same packet ID:
+The client sends [LoginQueueRequest](packets/login-queue-request.md) (`0x0002`)
+with no payload when entering the loading queue state. The server replies using
+the same packet ID:
 
 | Response type | `u8` | Meaning |
 | --- | --- | --- |

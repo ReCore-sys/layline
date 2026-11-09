@@ -37,6 +37,7 @@ decoder.
 | Packet | ID | Direction | Description |
 | --- | --- | --- | --- |
 | [Login](packets/login.md) | `0x0001` | Client to server | Account login and version information |
+| [LoginQueueRequest](packets/login-queue-request.md) | `0x0002` | Both | Request loading admission or report queue status |
 | [LoadPlayerProfile](packets/load-player-profile.md) | `0x0004` | Both | Request a player profile or report its availability |
 | [RequestData](packets/request-data.md) | `0x0029` | Both | Request or transfer connection and world data |
 | [AccessDenied](packets/access-denied.md) | `0x0064` | Server to client | Login rejection reason |

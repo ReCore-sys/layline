@@ -4,6 +4,7 @@ use layline_packets::registry::Registry;
 
 pub mod login;
 pub mod load_player_profile;
+pub mod login_queue_request;
 pub mod ping;
 
 pub type PacketRegistry = Registry<GameState, Connection>;

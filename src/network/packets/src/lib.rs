@@ -8,11 +8,13 @@ mod tests {
     use inbound::{
         load_player_profile::LoadPlayerProfile,
         login::Login,
+        login_queue_request::LoginQueueRequest,
         ping::InboundPing,
     };
     use layline_codec::{Packet, Reliability};
     use outbound::{
         load_player_profile::LoadPlayerProfileResponse,
+        login_queue_request::LoginQueueResponse,
         ping::OutboundPing,
         rejected::Rejected,
         request_data::RequestData,
@@ -36,6 +38,19 @@ mod tests {
             Reliability::ReliableOrdered
         );
         assert_eq!(LoadPlayerProfileResponse::ORDERING_CHANNEL, 0);
+
+        assert_eq!(LoginQueueRequest::PACKET_ID, 0x0002);
+        assert_eq!(
+            LoginQueueRequest::RELIABILITY,
+            Reliability::ReliableOrdered
+        );
+        assert_eq!(LoginQueueRequest::ORDERING_CHANNEL, 0);
+        assert_eq!(LoginQueueResponse::PACKET_ID, 0x0002);
+        assert_eq!(
+            LoginQueueResponse::RELIABILITY,
+            Reliability::ReliableOrdered
+        );
+        assert_eq!(LoginQueueResponse::ORDERING_CHANNEL, 0);
 
         assert_eq!(InboundPing::PACKET_ID, 0x0072);
         assert_eq!(InboundPing::RELIABILITY, Reliability::Unreliable);
