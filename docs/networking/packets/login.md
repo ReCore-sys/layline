@@ -1,53 +1,44 @@
 # Login
 
-**Protocol reference:** Project Zomboid 42.21.0 (revision `4a0e9546ec`).
-Packet IDs and behavior may differ in other versions.
+**Game version:** Project Zomboid 42.21.0 (commit `4a0e9546ec`).
 
-The client sends `Login` after establishing a RakNet connection for a normal
-multiplayer join. A server-list [Ping](ping.md) uses a separate path and
-sends `Ping` instead of `Login`.
+The client sends `Login` after connecting to a server. A server-list [Ping](ping.md)
+uses a separate path and does not send login credentials.
 
 | Property | Value |
 | --- | --- |
 | Packet ID | `0x0001` (1) |
 | Direction | Client to server |
 | State | Connected, before login |
-| Priority | `1` (`HIGH`) |
-| Reliability | `3` (`RELIABLE_ORDERED`) |
+| RakNet priority | High (1) |
+| Reliability | `ReliableOrdered` |
 | Ordering channel | `0` |
 
-## Packet format
+## Packet fields
 
-Fields appear in the order shown. Types and byte order are described in
-[Network data types](../data-types.md). The table includes the application header
-but excludes RakNet transport framing.
+After the application header, the packet contains:
 
 | Field | Type | Description |
 | --- | --- | --- |
-| Marker | Byte | `0x86` |
-| Packet ID | Short | `0x0001` |
-| Username | String | Client account username |
-| Password | String | Client account password value |
-| Client version | String | Client game and build version |
-| Authentication type | Int | Client authentication type |
+| Marker | `u8` | `0x86` |
+| Packet ID | `i16` | `0x0001` |
+| Username | `String` | Client account username |
+| Password | `String` | Client account password value |
+| Client version | `String` | Game and build version |
+| Authentication type | `i32` | Authentication method identifier |
 
-The server reads each string with `getUTF` and applies Java `String.trim()`
-before processing it. The password field is sensitive and should not be logged.
-The authentication type is a separate integer; its interpretation depends on
-the authentication implementation.
+The server reads the strings with the Java `ByteBufferReader.getUTF` method
+and applies Java's `String.trim()`. Treat the password as sensitive; don't log
+it. The authentication type depends on the server's authentication setup.
 
-## Server processing
+## What happens next
 
-The server checks the client version and authenticates the account, then applies
-additional checks including duplicate usernames, capacity and ping limits.
-Rejected clients can receive an [AccessDenied](rejected.md) packet and are
-disconnected.
-Some accounts may require a second authentication factor.
+The server checks the client version, authenticates the account and checks
+conditions such as duplicate usernames, capacity and ping limits. A rejected
+login can receive [AccessDenied](access-denied.md) before the server disconnects
+the client. Some accounts may also need a second authentication factor.
 
-After an accepted login without a second-factor request, the server reserves a
-connection slot, sends configured spawn regions, and sends connection details
-in a `RequestData` packet. Those details include map, mod, server-option and
-world data. This does not yet create the in-world player.
-
-See [Login and world loading sequence](../login-sequence.md) for the subsequent
-loading and player-connect exchanges.
+After an accepted login, the server reserves a connection slot and sends the
+configured spawn regions and connection details in [RequestData](request-data.md).
+The player is not in the world yet; see the
+[login and world loading sequence](../login-sequence.md).

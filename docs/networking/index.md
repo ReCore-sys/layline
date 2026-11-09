@@ -1,11 +1,10 @@
 # Networking
 
-**Protocol reference:** Project Zomboid 42.21.0 (revision `4a0e9546ec`).
+**Game version:** Project Zomboid 42.21.0 (commit `4a0e9546ec`).
 Behavior and packet IDs may differ in other versions.
 
-Project Zomboid uses RakNet for its main multiplayer connection. Game packets
-are carried as RakNet messages. Steam connections use the same peer interface
-but have Steam-specific connection behavior.
+Project Zomboid carries its multiplayer packets in RakNet messages. Steam
+connections use the same peer interface, with some Steam-specific behavior.
 
 ## Packet format
 
@@ -14,13 +13,13 @@ not include RakNet's transport framing.
 
 | Field | Size | Description |
 | --- | --- | --- |
-| Marker | 1 byte | `0x86`, identifying a game packet |
-| Packet ID | 2 bytes | Signed big-endian `PacketType` ordinal |
+| Marker | `u8` | `0x86`, identifying a game packet |
+| Packet ID | `i16` | Signed big-endian ordinal from the Java `PacketType` enum |
 | Payload | Variable | Packet-specific data |
 
-Each packet type specifies its RakNet priority, reliability and ordering
-channel. Packet IDs are derived from the order of the `PacketType` enum, so
-they are version-dependent.
+Each Java packet type specifies its RakNet priority, reliability and ordering
+channel. IDs follow the Java `PacketType` enum's declaration order, so they
+can change between game versions.
 
 ## Data types
 
@@ -40,7 +39,7 @@ decoder.
 | [Login](packets/login.md) | `0x0001` | Client to server | Account login and version information |
 | [LoadPlayerProfile](packets/load-player-profile.md) | `0x0004` | Both | Request a player profile or report its availability |
 | [RequestData](packets/request-data.md) | `0x0029` | Both | Request or transfer connection and world data |
-| [AccessDenied](packets/rejected.md) | `0x0064` | Server to client | Login rejection reason |
+| [AccessDenied](packets/access-denied.md) | `0x0064` | Server to client | Login rejection reason |
 | [Ping](packets/ping.md) | `0x0072` | Both | Server-list connection and player-limit query |
 | [SpawnRegion](packets/spawn-region.md) | `0x0073` | Server to client | Spawn-region index and serialized Lua table |
 

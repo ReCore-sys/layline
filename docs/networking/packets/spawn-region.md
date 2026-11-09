@@ -1,100 +1,80 @@
 # SpawnRegion
 
-**Protocol reference:** Project Zomboid 42.21.0 (revision `4a0e9546ec`).
-Packet IDs and behavior may differ in other versions.
+**Game version:** Project Zomboid 42.21.0 (commit `4a0e9546ec`).
 
-The server sends one `SpawnRegion` packet for each spawn region offered to a
-joining client. The packet transfers the region's index and serialized Lua
-table; it is not the `SpawnRegions()` Lua file itself. See
-[Spawn points](../../world/spawn-points.md) for the region and point data
-formats.
+For each region offered during login, the server sends a `SpawnRegion` packet
+with its index and serialized table. It doesn't send the
+`SpawnRegions()` Lua file itself; see [Spawn points](../../world/spawn-points.md)
+for that data.
 
 | Property | Value |
 | --- | --- |
 | Packet ID | `0x0073` (115) |
 | Direction | Server to client |
 | State | After login is accepted, during connection setup |
-| Priority | `1` (`HIGH`) |
-| Reliability | `2` (`RELIABLE`) |
+| RakNet priority | High (1) |
+| Reliability | `Reliable` |
 | Ordering channel | `0` |
 
-## Packet format
-
-Fields appear in the order shown. Types and byte order are described in
-[Network data types](../data-types.md). The table includes the application
-header but excludes RakNet transport framing.
+## Packet fields
 
 | Field | Type | Description |
 | --- | --- | --- |
-| Marker | Byte | `0x86` |
-| Packet ID | Short | `0x0073` |
-| Region index | Int | 1-based index used to identify this region |
+| Marker | `u8` | `0x86` |
+| Packet ID | `i16` | `0x0073` |
+| Region index | `i32` | 1-based index used to identify the region |
 | Region table | Kahlua table | Serialized region data |
 
-The region table uses the game's Kahlua table serializer, not the custom
-[`TableNetworkUtils`](../lua/table-serialization.md#tablenetworkutils) or
-[`PZNetKahluaTableImpl`](../lua/table-serialization.md#pznetkahlua-table)
-encodings. A sanitized 42.21.0 capture confirms the table format for the
-SpawnRegion values; see
-[Kahlua tables](../lua/table-serialization.md#kahlua-tables). The server writes
-the table after the index; the client reads the index, loads a Kahlua table
-from the remaining packet data using world version `249`, and stores the
-result under that index.
+The Java server uses Kahlua's native table serializer here. The Java client
+reads the index, then loads the rest of the packet with world version `249`.
+This is not [`TableNetworkUtils`](../lua/table-serialization.md#tablenetworkutils)
+or [`PZNetKahluaTableImpl`](../lua/table-serialization.md#pznetkahlua-table);
+see [Kahlua tables](../lua/table-serialization.md#kahlua-tables).
 
-## Region table fields
+## Region table
 
-The serialized table is a region entry, not just its spawn-point coordinates.
 A sanitized 42.21.0 capture showed these top-level keys:
 
-| Key | Value | Purpose |
+| Key | Type | Purpose |
 | --- | --- | --- |
-| `name` | String | Region name shown when choosing a spawn region |
-| `file` | String | Path to the region's spawn-points Lua file |
+| `name` | `String` | Region name shown in the spawn-region menu |
+| `file` | `String` | Path to the region's spawn-points Lua file |
 | `points` | Table | Profession-keyed spawn-point lists |
 
-Each profession in `points` maps to a 1-based array of point tables. The
-captured points used numeric `posX`, `posY`, and `posZ` coordinates; the source
-format permits `posZ` to be omitted. The captured structure has this shape:
+Each profession maps to a 1-based array of point tables. Captured points used
+numeric `posX`, `posY` and `posZ` coordinates; the source format allows `posZ`
+to be omitted. In Rust-like notation, the captured structure is:
 
 ```text
 {
-    name: string,
-    file: string,
+    name: String,
+    file: String,
     points: {
-        [profession: string]: {
-            [point_index: number]: {
-                posX: number,
-                posY: number,
-                posZ?: number,
+        [profession: String]: {
+            [point_index: f64]: {
+                posX: f64,
+                posY: f64,
+                posZ?: f64,
             },
         },
     },
 }
 ```
 
-The actual coordinates and available professions come from the region's
-points file; see [Spawn points](../../world/spawn-points.md). These are
-capture-observed table fields, not additional fixed packet-header fields.
+These are observed table values, not additional fixed packet fields. Available
+professions and coordinates come from the region's
+[points file](../../world/spawn-points.md).
 
-## Sequence and ordering
+## Ordering
 
-After accepting a login, the server iterates region indexes from `1` through
-the region count and sends one packet per index. The index lets the client
-reconstruct the region list even if packets arrive out of order. These packets
-are reliable but not reliable-ordered, so their send order is not an arrival
-order guarantee. The server sends them before the connection-details
-`RequestData` packet, but the two packet types likewise have no cross-packet
-ordering guarantee.
+The server sends regions with indexes from `1` through the region count.
+Reliable delivery does not preserve their order, and neither does it guarantee
+arrival before the `RequestData` connection-details packet. The client uses
+the indexes to rebuild the list. The chosen region is sent later during new
+player creation.
 
-The client uses the received table to populate the spawn-region choices. The
-selected region name is later sent as part of new-player creation; it is not
-selected by the `SpawnRegion` packet itself.
-
-## Decompiled implementation
-
-The packet ID and transport settings come from `PacketTypes.SpawnRegion`.
-`GameServer` writes the index and calls `KahluaTable.save`; `GameClient`
-receives the index and calls `KahluaTable.load(buffer, 249)`. The Kahlua
-serializer implementation is external to the decompiled source in this
-repository. The capture documents the string, double and nested-table values
-used by SpawnRegion; other Kahlua value tags remain unspecified.
+In the decompiled Java source, `GameServer` writes the index and calls the
+Kahlua runtime's `KahluaTable.save`; `GameClient` reads it and calls
+`KahluaTable.load(buffer, 249)`. The serializer implementation isn't included
+here. The capture confirms `String`, `f64` and nested-table values; other
+Kahlua tags remain unknown.
