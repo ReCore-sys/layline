@@ -195,6 +195,19 @@ pub struct WorldDictionary {
     pub data: LengthPrefixedBytes,
 }
 
+impl WorldDictionary {
+    pub fn from_raw_data(raw_data: Bytes) -> Self {
+        let sentinel = "DICTIONARY_PACKET_END".encode();
+        let mut data = BytesMut::with_capacity(raw_data.len() + sentinel.len());
+        data.extend(raw_data);
+        data.extend(sentinel);
+
+        Self {
+            data: LengthPrefixedBytes::from(data.freeze()),
+        }
+    }
+}
+
 #[derive(Debug, Clone)]
 pub struct ConnectionDetails {
     pub is_coop_host: bool,
@@ -315,6 +328,18 @@ impl NetEncode for ConnectionDetails {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn wraps_raw_world_dictionary_data_with_sentinel_and_length() {
+        let raw_data = Bytes::from_static(&[0x01, 0x02, 0x03]);
+        let encoded = WorldDictionary::from_raw_data(raw_data).encode();
+        let declared_length = i32::from_be_bytes(encoded[..4].try_into().unwrap()) as usize;
+        let sentinel = "DICTIONARY_PACKET_END".encode();
+
+        assert_eq!(declared_length, encoded.len() - 4);
+        assert_eq!(&encoded[4..7], &[0x01, 0x02, 0x03]);
+        assert_eq!(&encoded[7..], sentinel.as_ref());
+    }
 
     #[test]
     fn default_connection_details_is_compact_and_has_fixed_subblocks() {

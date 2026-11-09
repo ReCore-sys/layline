@@ -299,14 +299,16 @@ After sending the configured spawn regions, Layline sends a `FullData`
 details, workshop items, mods, public options, or global-object systems; the
 GameTime mod-data flag is false. Steam-mode sessions must enable the conditional
 workshop section, even when its item count is zero. The map and maximum-player
-count are taken from the server configuration. The default world-dictionary
-block is empty, which is enough for the client to finish reading connection
-details but is not a valid dictionary for later world initialization.
+count are taken from the server configuration. The raw world dictionary can be
+provided through `GameState::world_dictionary` using
+`WorldDictionary::from_raw_data`; this appends the terminal sentinel and adds
+the `i32` length required by ConnectionDetails. Until populated, the default is
+an empty placeholder and is not valid for world initialization.
 
 The packet type can encode requests, full data, parts and part acknowledgments.
-The login path currently sends only `FullData` and declines to send a body of
-1,024 bytes or more; application-level part transfer and ACK tracking are not
-implemented yet.
+The login path sends `FullData` for bodies smaller than 1,024 bytes. Larger
+bodies are sent in 1,024-byte `PartData` chunks, up to 200 KiB; ACK-window
+tracking for larger transfers is not implemented yet.
 
 ## Other dataset bodies
 

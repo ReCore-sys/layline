@@ -4,6 +4,7 @@ mod handlers;
 use crate::game_state::GameState;
 use crate::handlers::PacketRegistry;
 use layline_network::start_net_server;
+use layline_packets::outbound::connection_details::WorldDictionary;
 use layline_shared::paths::get_user_dir;
 use layline_world::GameMap;
 use tracing::{error, info};
@@ -49,17 +50,39 @@ pub fn start_game_loop(cli_args: layline_config::cli_args::CLIArgs) {
         }
     };
 
+    let world_dict_path = get_user_dir().map(|path| {
+        path.join("Saves")
+            .join("Multiplayer")
+            .join(&cli_args.save_name)
+            .join("WorldDictionary.bin")
+    });
+
+    let world_dictionary = match world_dict_path {
+        Ok(ref path) => match std::fs::read(path) {
+            Ok(dict) => WorldDictionary::from_raw_data(dict.into()),
+            Err(e) => {
+                error!("Failed to load world dictionary from {}: {}", path.display(), e);
+                return;
+            }
+        },
+        Err(e) => {
+            error!("Failed to get user directory: {}", e);
+            return;
+        }
+    };
+
     let mut world = GameState {
         world: hecs::World::new(),
         map,
         cli_args,
         config,
+        world_dictionary,
     };
     loop {
         let start_time = std::time::Instant::now();
         handle_connections(&registry, &mut world);
         let elapsed = start_time.elapsed();
-        let sleep_duration = std::time::Duration::from_secs_f32(1.0 / TPS as f32) - elapsed;
+        let sleep_duration = std::time::Duration::from_secs_f32(1.0 / TPS as f32).saturating_sub(elapsed);
         if sleep_duration > std::time::Duration::ZERO {
             std::thread::sleep(sleep_duration);
         }

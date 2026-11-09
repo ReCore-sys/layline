@@ -75,6 +75,7 @@ pub fn login(world: &mut GameState, connection: &Connection, packet: &mut Login)
 
     let mut details = ConnectionDetails {
         max_players: world.config.max_players,
+        world_dictionary: world.world_dictionary.clone(),
         ..Default::default()
     };
     if !world.config.map.is_empty() {
@@ -82,18 +83,43 @@ pub fn login(world: &mut GameState, connection: &Connection, packet: &mut Login)
     }
 
     let payload = details.encode();
-    if payload.len() >= 1024 {
+    if payload.len() < 1024 {
+        if let Err(error) = connection.send(RequestData::full_data(
+            RequestDataId::ConnectionDetails,
+            payload,
+        )) {
+            warn!("Failed to queue ConnectionDetails: {error}");
+        }
+        return;
+    }
+
+    const PART_SIZE: usize = 1024;
+    const MAX_UNACKNOWLEDGED_SIZE: usize = 204_800;
+    if payload.len() > MAX_UNACKNOWLEDGED_SIZE {
         warn!(
-            "ConnectionDetails payload is {} bytes; RequestData part transfers are not implemented",
+            "ConnectionDetails payload is {} bytes; transfers larger than one 200 KiB ACK window are not implemented",
             payload.len()
         );
         return;
     }
 
-    if let Err(error) = connection.send(RequestData::full_data(
-        RequestDataId::ConnectionDetails,
-        payload,
-    )) {
-        warn!("Failed to queue ConnectionDetails: {error}");
+    let total_size = payload.len();
+    let part_count = total_size.div_ceil(PART_SIZE);
+    info!("Sending ConnectionDetails in {part_count} parts ({total_size} bytes)");
+    for (part_index, part) in payload.chunks(PART_SIZE).enumerate() {
+        let offset = part_index * PART_SIZE;
+        let packet = RequestData::part_data(
+            RequestDataId::ConnectionDetails,
+            total_size,
+            offset,
+            part,
+        );
+        if let Err(error) = connection.send(packet) {
+            warn!(
+                "Failed to queue ConnectionDetails part {} of {part_count}: {error}",
+                part_index + 1
+            );
+            return;
+        }
     }
 }
