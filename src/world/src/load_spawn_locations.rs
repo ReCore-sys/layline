@@ -73,7 +73,11 @@ pub(crate) fn load_spawn_locations(
         });
     }
 
-    info!("Loaded {} spawn locations across {} regions", counter, spawn_regions.len());
+    info!(
+        "Loaded {} spawn locations across {} regions",
+        counter,
+        spawn_regions.len()
+    );
     Ok(spawn_regions)
 }
 
@@ -141,10 +145,9 @@ mod tests {
         ));
         let installation_dir = root.join("install");
         let server_dir = root.join("user/Server");
-        let configured_map_file = installation_dir
-            .join("media/maps/Selected Map/spawnpoints.lua");
-        let unconfigured_map_file = installation_dir
-            .join("media/maps/Unselected Map/spawnpoints.lua");
+        let configured_map_file = installation_dir.join("media/maps/Selected Map/spawnpoints.lua");
+        let unconfigured_map_file =
+            installation_dir.join("media/maps/Unselected Map/spawnpoints.lua");
         let custom_points_file = server_dir.join("save1_spawnpoints.lua");
         std::fs::create_dir_all(configured_map_file.parent().unwrap()).unwrap();
         std::fs::create_dir_all(unconfigured_map_file.parent().unwrap()).unwrap();
@@ -177,12 +180,7 @@ mod tests {
         )
         .unwrap();
 
-        let regions = load_spawn_locations(
-            installation_dir,
-            root.join("user"),
-            "save1",
-        )
-        .unwrap();
+        let regions = load_spawn_locations(installation_dir, root.join("user"), "save1").unwrap();
 
         assert_eq!(regions.len(), 2);
         assert_eq!(regions[0].name, "Selected Map");

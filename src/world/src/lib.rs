@@ -5,8 +5,8 @@ use crate::error::WorldError;
 use crate::load_spawn_locations::load_spawn_locations;
 use ahash::AHashMap;
 use glam::Vec3A;
-use layline_shared::profession::Profession;
 use layline_shared::paths::{get_user_dir, get_zomboid_install_dir};
+use layline_shared::profession::Profession;
 
 pub enum SpawnPointsFile {
     File(String),

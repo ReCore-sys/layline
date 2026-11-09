@@ -1,5 +1,5 @@
-
-static INCLUDES_DIR: include_dir::Dir = include_dir::include_dir!("$CARGO_MANIFEST_DIR/src/includes");
+static INCLUDES_DIR: include_dir::Dir =
+    include_dir::include_dir!("$CARGO_MANIFEST_DIR/src/includes");
 
 pub fn load_layline_lua(lua: &mut mlua::Lua) -> Result<(), mlua::Error> {
     for lua_file in INCLUDES_DIR.find("**/*.lua").unwrap() {

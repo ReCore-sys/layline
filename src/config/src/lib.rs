@@ -1,7 +1,7 @@
 pub mod cli_args;
 
 use serde::{Deserialize, Serialize};
-use serde_flexible::{as_bool};
+use serde_flexible::as_bool;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "PascalCase")]

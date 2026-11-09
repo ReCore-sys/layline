@@ -1,6 +1,5 @@
-pub mod profession;
-pub mod locations;
-pub mod position;
-pub mod paths;
 pub mod error;
-
+pub mod locations;
+pub mod paths;
+pub mod position;
+pub mod profession;

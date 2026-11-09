@@ -64,10 +64,7 @@ impl NetworkLuaTable {
 
         let table = lua.create_table()?;
         for (key, value) in &self.entries {
-            table.raw_set(
-                key.to_lua_value(lua)?,
-                value.to_lua_value(lua, depth)?,
-            )?;
+            table.raw_set(key.to_lua_value(lua)?, value.to_lua_value(lua, depth)?)?;
         }
         Ok(table)
     }
@@ -97,9 +94,10 @@ impl NetworkLuaValue {
             mlua::Value::String(value) => Ok(Self::String(value.to_str()?.to_string())),
             mlua::Value::Integer(value) => Ok(Self::Number(exact_integer(value)?)),
             mlua::Value::Number(value) => Ok(Self::Number(value)),
-            mlua::Value::Table(value) => Ok(Self::Table(
-                NetworkLuaTable::from_lua_table_at_depth(&value, depth + 1)?,
-            )),
+            mlua::Value::Table(value) => Ok(Self::Table(NetworkLuaTable::from_lua_table_at_depth(
+                &value,
+                depth + 1,
+            )?)),
             value => Err(unsupported_type("value", &value)),
         }
     }

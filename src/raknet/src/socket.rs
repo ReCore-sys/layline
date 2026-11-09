@@ -1876,9 +1876,7 @@ impl RaknetSocket {
                 queue.has_batch_capacity(reliability, lengths())?;
                 let mtu = usize::from(queue.mtu());
                 for length in lengths() {
-                    if !reliability.can_fragment()
-                        && length > mtu.saturating_sub(60)
-                    {
+                    if !reliability.can_fragment() && length > mtu.saturating_sub(60) {
                         return Err(RaknetError::PacketSizeExceedMTU);
                     }
                 }

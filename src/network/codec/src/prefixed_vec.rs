@@ -108,8 +108,8 @@ impl<T, L> DerefMut for PrefixedVec<T, L> {
 
 impl<T: NetEncode, L: LengthPrefix> NetEncode for PrefixedVec<T, L> {
     fn encode(&self) -> Bytes {
-        let len = L::from_len(self.items.len())
-            .expect("vector length does not fit in its prefix type");
+        let len =
+            L::from_len(self.items.len()).expect("vector length does not fit in its prefix type");
         let mut bytes = BytesMut::new();
         bytes.extend(len.encode());
         for item in &self.items {

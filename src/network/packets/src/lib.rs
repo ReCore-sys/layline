@@ -7,9 +7,7 @@ mod tests {
     use super::*;
     use inbound::{login::Login, ping::InboundPing};
     use layline_codec::{Packet, Reliability};
-    use outbound::{
-        ping::OutboundPing, rejected::Rejected, request_data::RequestData,
-    };
+    use outbound::{ping::OutboundPing, rejected::Rejected, request_data::RequestData};
 
     #[test]
     fn packet_transport_settings_match_protocol() {

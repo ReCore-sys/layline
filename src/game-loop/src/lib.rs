@@ -1,12 +1,12 @@
 mod game_state;
 mod handlers;
 
-use tracing::{error, info};
 use crate::game_state::GameState;
 use crate::handlers::PacketRegistry;
 use layline_network::start_net_server;
 use layline_shared::paths::get_user_dir;
 use layline_world::GameMap;
+use tracing::{error, info};
 
 const TPS: u32 = 30; // Ticks per second
 const MAX_PACKETS_PER_TICK: usize = 64;
@@ -17,9 +17,9 @@ pub fn start_game_loop(cli_args: layline_config::cli_args::CLIArgs) {
     });
     let registry = handlers::registry();
 
-
     let config_path = get_user_dir().map(|path| {
-        path.join("Server").join(format!("{}.ini", cli_args.save_name))
+        path.join("Server")
+            .join(format!("{}.ini", cli_args.save_name))
     });
 
     let config = match config_path {
@@ -36,7 +36,10 @@ pub fn start_game_loop(cli_args: layline_config::cli_args::CLIArgs) {
         }
     };
 
-    info!("Loaded config successfully. Starting game loop with save: {}", cli_args.save_name);
+    info!(
+        "Loaded config successfully. Starting game loop with save: {}",
+        cli_args.save_name
+    );
 
     let map = match GameMap::new(&cli_args.save_name) {
         Ok(map) => map,
@@ -50,7 +53,7 @@ pub fn start_game_loop(cli_args: layline_config::cli_args::CLIArgs) {
         world: hecs::World::new(),
         map,
         cli_args,
-        config
+        config,
     };
     loop {
         let start_time = std::time::Instant::now();

@@ -1,6 +1,6 @@
 use crate::game_state::GameState;
-use layline_codec::lua::lua_table::NetworkLuaTable;
 use layline_codec::NetEncode;
+use layline_codec::lua::lua_table::NetworkLuaTable;
 use layline_macros::handler;
 use layline_network::Connection;
 use layline_packets::inbound::login::Login;
@@ -38,8 +38,8 @@ pub fn login(world: &mut GameState, connection: &Connection, packet: &mut Login)
                     point.set("posY", spawn_point.y)?;
                     point.set("posZ", spawn_point.z)?;
 
-                    let point_index = i64::try_from(point_offset + 1)
-                        .map_err(mlua::Error::external)?;
+                    let point_index =
+                        i64::try_from(point_offset + 1).map_err(mlua::Error::external)?;
                     profession_points.set(point_index, point)?;
                 }
                 points.set(profession.to_id(), profession_points)?;
@@ -73,8 +73,10 @@ pub fn login(world: &mut GameState, connection: &Connection, packet: &mut Login)
         }
     }
 
-    let mut details = ConnectionDetails::default();
-    details.max_players = world.config.max_players;
+    let mut details = ConnectionDetails {
+        max_players: world.config.max_players,
+        ..Default::default()
+    };
     if !world.config.map.is_empty() {
         details.game_map = world.config.map.clone();
     }

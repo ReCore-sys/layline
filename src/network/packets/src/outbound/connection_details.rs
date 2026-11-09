@@ -1,6 +1,6 @@
 use bytes::{Bytes, BytesMut};
-use layline_codec::{NetEncode, PrefixedVec};
 use layline_codec::raw_bytes::RawBytes;
+use layline_codec::{NetEncode, PrefixedVec};
 use layline_macros::NetEncode;
 
 #[derive(Debug, Clone, NetEncode)]

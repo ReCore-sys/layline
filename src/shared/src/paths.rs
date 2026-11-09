@@ -1,5 +1,5 @@
-use std::path::PathBuf;
 use crate::error::SharedError;
+use std::path::PathBuf;
 
 /// Gets the Zomboid installation directory, either from the `ZOMBOID_SERVER_INSTALL_PATH` environment variable or from the current working directory.
 /// It's assumed the layline executable is alongside the regular zomboid server files, so likely
@@ -14,9 +14,13 @@ pub fn get_zomboid_install_dir() -> Result<PathBuf, SharedError> {
             std::env::current_dir().unwrap_or_default(),
         ));
     };
-    if ![base_path.join("media"), base_path.join("java"), base_path.join("jre64")]
-        .iter()
-        .all(|p| p.exists())
+    if ![
+        base_path.join("media"),
+        base_path.join("java"),
+        base_path.join("jre64"),
+    ]
+    .iter()
+    .all(|p| p.exists())
     {
         return Err(SharedError::InvalidGameLocation(base_path));
     };
@@ -25,7 +29,6 @@ pub fn get_zomboid_install_dir() -> Result<PathBuf, SharedError> {
     }
     Ok(base_path)
 }
-
 
 /// Gets the Zomboid user directory, either from the `ZOMBOID_USER_DIR` environment variable or from the user's home directory.
 /// Is usually `C:\Users\<username>\Zomboid` on Windows or `~/Zomboid` on Linux.

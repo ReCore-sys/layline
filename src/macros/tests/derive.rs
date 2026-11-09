@@ -125,7 +125,10 @@ fn enum_variants_encode_tags_and_payloads_in_declaration_order() {
         (Message::Empty, b"\x00".as_slice()),
         (Message::Tuple(7, "x".to_string()), b"\x01\x07\x00\x01x"),
         (Message::Named { value: 0x1234 }, b"\x02\x12\x34"),
-        (Message::Nested(Wrapper(9, "x".to_string())), b"\x03\x00\x09\x00\x01x"),
+        (
+            Message::Nested(Wrapper(9, "x".to_string())),
+            b"\x03\x00\x09\x00\x01x",
+        ),
     ];
 
     for (value, expected) in values {

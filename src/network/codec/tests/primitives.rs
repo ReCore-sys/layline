@@ -115,7 +115,10 @@ fn prefixed_vectors_use_the_selected_count_width() {
     let expected = Bytes::from_static(b"\x00\x00\x00\x02\x00\x01a\x00\x02bc");
     assert_eq!(strings.encode(), expected);
     let mut bytes = expected.clone();
-    assert_eq!(PrefixedVec::<String, u32>::decode(&mut bytes), Some(strings));
+    assert_eq!(
+        PrefixedVec::<String, u32>::decode(&mut bytes),
+        Some(strings)
+    );
     assert!(bytes.is_empty());
 
     let values = PrefixedVec::<u8, u16>::new(vec![0xff, 0x01]);

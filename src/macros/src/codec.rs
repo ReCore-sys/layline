@@ -131,10 +131,7 @@ fn enum_starting_index(input: &DeriveInput) -> syn::Result<u8> {
                 ));
             };
             starting_index = Some(value.base10_parse::<u8>().map_err(|_| {
-                syn::Error::new_spanned(
-                    value,
-                    "starting index must be an integer from 0 to 255",
-                )
+                syn::Error::new_spanned(value, "starting index must be an integer from 0 to 255")
             })?);
         }
     }
@@ -284,7 +281,11 @@ pub fn encode(input: DeriveInput) -> syn::Result<TokenStream> {
     if matches!(&input.data, Data::Enum(_)) {
         return encode_enum(&input);
     }
-    if input.attrs.iter().any(|attr| attr.path().is_ident("starting_index")) {
+    if input
+        .attrs
+        .iter()
+        .any(|attr| attr.path().is_ident("starting_index"))
+    {
         return Err(syn::Error::new_spanned(
             &input.ident,
             "`starting_index` is only supported on enums",
@@ -294,25 +295,22 @@ pub fn encode(input: DeriveInput) -> syn::Result<TokenStream> {
     let conditions = field_conditions(fields)?;
     let name = &input.ident;
     let (impl_generics, ty_generics, where_clause) = input.generics.split_for_impl();
-    let writes = fields
-        .members()
-        .zip(conditions)
-        .map(|(member, condition)| {
-            if let Some(condition) = condition {
-                quote! {
-                    if self.#condition {
-                        let value = self.#member.as_ref().expect(
-                            "conditional field must be Some when its condition is true"
-                        );
-                        bytes.extend(::layline_codec::NetEncode::encode(value));
-                    }
-                }
-            } else {
-                quote! {
-                    bytes.extend(::layline_codec::NetEncode::encode(&self.#member));
+    let writes = fields.members().zip(conditions).map(|(member, condition)| {
+        if let Some(condition) = condition {
+            quote! {
+                if self.#condition {
+                    let value = self.#member.as_ref().expect(
+                        "conditional field must be Some when its condition is true"
+                    );
+                    bytes.extend(::layline_codec::NetEncode::encode(value));
                 }
             }
-        });
+        } else {
+            quote! {
+                bytes.extend(::layline_codec::NetEncode::encode(&self.#member));
+            }
+        }
+    });
 
     Ok(quote! {
         impl #impl_generics ::layline_codec::NetEncode for #name #ty_generics #where_clause {
@@ -330,7 +328,11 @@ pub fn decode(input: DeriveInput) -> syn::Result<TokenStream> {
     if matches!(&input.data, Data::Enum(_)) {
         return decode_enum(&input);
     }
-    if input.attrs.iter().any(|attr| attr.path().is_ident("starting_index")) {
+    if input
+        .attrs
+        .iter()
+        .any(|attr| attr.path().is_ident("starting_index"))
+    {
         return Err(syn::Error::new_spanned(
             &input.ident,
             "`starting_index` is only supported on enums",
@@ -348,33 +350,36 @@ pub fn decode(input: DeriveInput) -> syn::Result<TokenStream> {
         let locals: Vec<_> = (0..named_fields.len())
             .map(|index| format_ident!("__layline_field_{index}"))
             .collect();
-        let decodes = named_fields
+        let decodes =
+            named_fields
+                .iter()
+                .zip(&locals)
+                .zip(&conditions)
+                .map(|((field, local), condition)| {
+                    let ty = &field.ty;
+                    if let Some(condition) = condition {
+                        let condition_index = named_fields
+                            .iter()
+                            .position(|candidate| candidate.ident.as_ref() == Some(condition))
+                            .unwrap();
+                        let condition_local = &locals[condition_index];
+                        let inner = option_inner_type(ty).unwrap();
+                        quote! {
+                            let #local = if #condition_local {
+                                Some(<#inner as ::layline_codec::NetDecode>::decode(bytes)?)
+                            } else {
+                                None
+                            };
+                        }
+                    } else {
+                        quote! {
+                            let #local = <#ty as ::layline_codec::NetDecode>::decode(bytes)?;
+                        }
+                    }
+                });
+        let names = named_fields
             .iter()
-            .zip(&locals)
-            .zip(&conditions)
-            .map(|((field, local), condition)| {
-                let ty = &field.ty;
-                if let Some(condition) = condition {
-                    let condition_index = named_fields
-                        .iter()
-                        .position(|candidate| candidate.ident.as_ref() == Some(condition))
-                        .unwrap();
-                    let condition_local = &locals[condition_index];
-                    let inner = option_inner_type(ty).unwrap();
-                    quote! {
-                        let #local = if #condition_local {
-                            Some(<#inner as ::layline_codec::NetDecode>::decode(bytes)?)
-                        } else {
-                            None
-                        };
-                    }
-                } else {
-                    quote! {
-                        let #local = <#ty as ::layline_codec::NetDecode>::decode(bytes)?;
-                    }
-                }
-            });
-        let names = named_fields.iter().map(|field| field.ident.as_ref().unwrap());
+            .map(|field| field.ident.as_ref().unwrap());
 
         return Ok(quote! {
             impl #impl_generics ::layline_codec::NetDecode for #name #ty_generics #where_clause {
