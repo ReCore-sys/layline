@@ -1,5 +1,5 @@
 use bytes::Bytes;
-use layline_codec::{NetDecode, NetEncode};
+use layline_codec::{NetDecode, NetEncode, PrefixedVec};
 
 macro_rules! number_case {
     ($ty:ty, $value:expr, $bytes:expr) => {{
@@ -101,6 +101,40 @@ fn strings_reject_bad_lengths_and_replace_invalid_utf8() {
         String::decode(&mut Bytes::from_static(b"\x00\x01\xff")).as_deref(),
         Some("\u{fffd}"),
     );
+}
+
+#[test]
+fn prefixed_vectors_use_the_selected_count_width() {
+    let default_prefix = PrefixedVec::<u8>::new(vec![0x12, 0x34]);
+    assert_eq!(
+        default_prefix.encode(),
+        Bytes::from_static(b"\x00\x00\x00\x02\x12\x34")
+    );
+
+    let strings = PrefixedVec::<String, u32>::new(vec!["a".into(), "bc".into()]);
+    let expected = Bytes::from_static(b"\x00\x00\x00\x02\x00\x01a\x00\x02bc");
+    assert_eq!(strings.encode(), expected);
+    let mut bytes = expected.clone();
+    assert_eq!(PrefixedVec::<String, u32>::decode(&mut bytes), Some(strings));
+    assert!(bytes.is_empty());
+
+    let values = PrefixedVec::<u8, u16>::new(vec![0xff, 0x01]);
+    let expected = Bytes::from_static(b"\x00\x02\xff\x01");
+    assert_eq!(values.encode(), expected);
+    let mut bytes = expected;
+    assert_eq!(PrefixedVec::<u8, u16>::decode(&mut bytes), Some(values));
+}
+
+#[test]
+fn prefixed_vectors_reject_truncated_items() {
+    let mut bytes = Bytes::from_static(b"\x00\x02\x01");
+    assert_eq!(PrefixedVec::<u8, u16>::decode(&mut bytes), None);
+}
+
+#[test]
+#[should_panic(expected = "vector length does not fit in its prefix type")]
+fn prefixed_vector_encoding_rejects_an_oversized_count() {
+    PrefixedVec::<u8, u8>::new(vec![0; usize::from(u8::MAX) + 1]).encode();
 }
 
 #[test]

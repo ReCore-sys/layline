@@ -1,8 +1,10 @@
 pub mod primitives;
 pub mod lua;
+pub mod prefixed_vec;
 
 pub use bytes;
 pub use raknet_v6::Reliability;
+pub use prefixed_vec::{LengthPrefix, PrefixedVec};
 
 use bytes::Bytes;
 
