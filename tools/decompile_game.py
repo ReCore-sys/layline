@@ -112,7 +112,7 @@ def run_decompiler(launcher: Path, game_dir: Path | None) -> Path:
     if result.returncode != 0:
         fail(f"ZomboidDecompiler exited with status {result.returncode}")
 
-    output = launcher.parent / "output"
+    output = launcher.parent / "output" / "source" / "zombie"
     if not (output / "network" / "PacketTypes.java").is_file():
         fail(f"decompiler output is missing expected file: {output / 'network' / 'PacketTypes.java'}")
     return output

@@ -47,10 +47,12 @@ socket2 = "0.6.5"
 
 # Byte manipulation
 bytes = "1.12.1"
+byteorder = "1.5.0"
 
 # Rand/crypto
 rand = "0.10.3"
 ahash = "0.8.12"
+crc32fast = "1.5.5"
 
 # Maths
 glam = "0.34.3"

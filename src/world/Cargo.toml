@@ -11,3 +11,5 @@ thiserror = { workspace = true }
 mlua = { workspace = true }
 tracing = { workspace = true }
 layline-lua = { workspace = true }
+byteorder = { workspace = true }
+crc32fast = { workspace = true }
