@@ -1,8 +1,10 @@
+pub mod blending;
+
 use crate::error::WorldError;
 use byteorder::{BigEndian, ReadBytesExt};
 use std::io::{BufReader, Read, Seek};
 use std::path::PathBuf;
-use std::sync::Arc;
+use crate::chunks::saved_chunk::blending::Blending;
 
 #[derive(Debug, Clone)]
 pub struct SavedChunk {
@@ -10,6 +12,7 @@ pub struct SavedChunk {
     pub y: i32,
     pub is_debug: bool,
     pub world_version: u16,
+    pub blending: Blending,
 }
 
 impl SavedChunk {
@@ -30,12 +33,16 @@ impl SavedChunk {
         if crc_checksum as i64 != crc {
             return Err(WorldError::MismatchedChecksum(x, y, crc, crc_checksum as i64));
         }
+        data.seek(std::io::SeekFrom::Start(current_pos))?;
+
+        let blending = Blending::read_blending(&mut data, world_version as u8)?;
 
         Ok(SavedChunk {
             x,
             y,
             is_debug: debug,
             world_version,
+            blending
         })
     }
 }

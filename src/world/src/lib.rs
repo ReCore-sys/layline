@@ -38,8 +38,7 @@ impl GameMap {
         
         if let Some(first_chunk) = saved_chunks.first() {
             info!(
-                "First saved chunk: x={}, y={}, debug={}, world_version={}",
-                first_chunk.x, first_chunk.y, first_chunk.is_debug, first_chunk.world_version
+                "First saved chunk: {first_chunk:?}",
             );
         }
 
