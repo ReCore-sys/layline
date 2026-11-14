@@ -1,9 +1,12 @@
 pub mod blending;
+pub mod attachments;
+pub mod square_coord;
 
 use crate::error::WorldError;
 use byteorder::{BigEndian, ReadBytesExt};
 use std::io::{BufReader, Read, Seek};
 use std::path::PathBuf;
+use attachments::Attachments;
 use crate::chunks::saved_chunk::blending::Blending;
 
 #[derive(Debug, Clone)]
@@ -13,6 +16,7 @@ pub struct SavedChunk {
     pub is_debug: bool,
     pub world_version: u16,
     pub blending: Blending,
+    pub attachments: Attachments,
 }
 
 impl SavedChunk {
@@ -22,27 +26,37 @@ impl SavedChunk {
         let world_version = data.read_i32::<BigEndian>()? as u16;
 
         let data_length = data.read_i32::<BigEndian>()?;
-        let crc = data.read_i64::<BigEndian>()?;
+        let expected_crc = data.read_i64::<BigEndian>()?;
 
         let current_pos = data.stream_position()?;
+        // Should always be 17 since we've read (1 + 4 + 4 + 8) bytes but doesn't hurt to check
+        assert_eq!(current_pos, 17);
+
+        // Read the remaining data to calculate the CRC checksum
         let remaining_data_length = data_length as u64 - current_pos;
         let mut remaining_data = vec![0u8; remaining_data_length as usize];
         data.read_exact(&mut remaining_data)?;
         assert_eq!(remaining_data.len() as u64, remaining_data_length);
+
         let crc_checksum = crc32fast::hash(&remaining_data);
-        if crc_checksum as i64 != crc {
-            return Err(WorldError::MismatchedChecksum(x, y, crc, crc_checksum as i64));
+        if crc_checksum as i64 != expected_crc {
+            return Err(WorldError::MismatchedChecksum(x, y, expected_crc, crc_checksum as i64));
         }
+
+        // Reset the cursor to the position after reading the rest of the data for the CRC check
         data.seek(std::io::SeekFrom::Start(current_pos))?;
 
-        let blending = Blending::read_blending(&mut data, world_version as u8)?;
+        let blending = Blending::read_blending(&mut data, world_version)?;
+
+        let attachments = Attachments::read_attachments(&mut data, world_version)?;
 
         Ok(SavedChunk {
             x,
             y,
             is_debug: debug,
             world_version,
-            blending
+            blending,
+            attachments
         })
     }
 }

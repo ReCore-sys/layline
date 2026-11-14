@@ -13,7 +13,7 @@ pub struct Blending {
 impl Blending {
     pub(crate) fn read_blending(
         data: &mut impl Read,
-        world_version: u8,
+        world_version: u16,
     ) -> Result<Self, std::io::Error> {
         let mut blending = Blending {
             blending_done_full: false,
@@ -26,7 +26,7 @@ impl Blending {
         }
 
         if world_version >= 210 {
-            blending.blending_modified = *read_flags(data.read_i8()?)
+            blending.blending_modified = *layline_shared::read_flags(data.read_i8()?)
                 .first_chunk::<4>()
                 .expect("Could not convert 8 bools to 4 bools");
 
@@ -48,19 +48,6 @@ impl Blending {
 
         Ok(blending)
     }
-}
-
-fn read_flags(byte: i8) -> [bool; 8] {
-    [
-        byte as u8 & 0b0000_0001 != 0,
-        byte as u8 & 0b0000_0010 != 0,
-        byte as u8 & 0b0000_0100 != 0,
-        byte as u8 & 0b0000_1000 != 0,
-        byte as u8 & 0b0001_0000 != 0,
-        byte as u8 & 0b0010_0000 != 0,
-        byte as u8 & 0b0100_0000 != 0,
-        byte as u8 & 0b1000_0000 != 0,
-    ]
 }
 
 mod blend_direction {

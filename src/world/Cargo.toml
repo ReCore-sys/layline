@@ -13,3 +13,4 @@ tracing = { workspace = true }
 layline-lua = { workspace = true }
 byteorder = { workspace = true }
 crc32fast = { workspace = true }
+derive_deref = { workspace = true }
