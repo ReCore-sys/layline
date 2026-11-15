@@ -1,27 +1,36 @@
-pub mod blending;
 pub mod attachments;
+pub mod blending;
 pub mod square_coord;
+pub mod blood_splat;
 
+use std::cmp::min;
+use crate::chunks::iso_chunk::blending::Blending;
+use crate::chunks::iso_chunk_level::IsoChunkLevel;
 use crate::error::WorldError;
+use attachments::Attachments;
 use byteorder::{BigEndian, ReadBytesExt};
 use std::io::{BufReader, Read, Seek};
 use std::path::PathBuf;
-use attachments::Attachments;
-use crate::chunks::saved_chunk::blending::Blending;
+use layline_config::Config;
+use crate::chunks::iso_chunk::blood_splat::IsoFloorBloodSplat;
 
-#[derive(Debug, Clone)]
-pub struct SavedChunk {
+#[derive(Debug, Clone, Default)]
+pub struct IsoChunk {
     pub x: i32,
     pub y: i32,
     pub is_debug: bool,
     pub world_version: u16,
     pub blending: Blending,
     pub attachments: Attachments,
+    pub level_min: i32,
+    pub level_max: i32,
+    pub levels: Vec<IsoChunkLevel>,
+    pub blood_splats: Vec<IsoFloorBloodSplat>,
+    pub next_splat_index: u16
 }
 
-impl SavedChunk {
-    pub fn load_from_disk(mut data: impl Read + Seek, x: i32, y: i32) -> Result<Self, WorldError> {
-
+impl IsoChunk {
+    pub fn load_from_disk(mut data: impl Read + Seek, x: i32, y: i32, config: &Config) -> Result<Self, WorldError> {
         let debug = data.read_i8()? != 0;
         let world_version = data.read_i32::<BigEndian>()? as u16;
 
@@ -40,7 +49,12 @@ impl SavedChunk {
 
         let crc_checksum = crc32fast::hash(&remaining_data);
         if crc_checksum as i64 != expected_crc {
-            return Err(WorldError::MismatchedChecksum(x, y, expected_crc, crc_checksum as i64));
+            return Err(WorldError::MismatchedChecksum(
+                x,
+                y,
+                expected_crc,
+                crc_checksum as i64,
+            ));
         }
 
         // Reset the cursor to the position after reading the rest of the data for the CRC check
@@ -50,18 +64,53 @@ impl SavedChunk {
 
         let attachments = Attachments::read_attachments(&mut data, world_version)?;
 
-        Ok(SavedChunk {
+        let (level_min, level_max) = if world_version <= 206 {
+            let level_min = data.read_i32::<BigEndian>()?;
+            let level_max = data.read_i32::<BigEndian>()?;
+            (level_min, level_max)
+        } else {
+            (0, 7)
+        };
+
+        // This is actually way more complicated in the java stuff but this'll do for now
+        let levels = (level_min..=level_max)
+            .map(|l| IsoChunkLevel::new((x, y), l))
+            .collect();
+
+        let blood_splat_lifetime = config.blood_splat_lifespan_days;
+        // This should be dynamic but that's not set up yet
+        let world_age_hours = 12;
+
+        let blood_splat_counter = data.read_i32::<BigEndian>()?;
+        let mut blood_splats = Vec::with_capacity(blood_splat_counter as usize);
+        let mut next_splat_index = 0;
+        for _ in 0..blood_splat_counter {
+            let mut splat = IsoFloorBloodSplat::read_blood_splat(&mut data)?;
+            splat.world_age = (world_age_hours as f32).min(splat.world_age);
+            if blood_splat_lifetime <= 0 || !(world_age_hours as f32 - splat.world_age >= (blood_splat_lifetime * 24) as f32) && splat.splat_type < 8{
+                next_splat_index = splat.index % 10;
+            }
+            blood_splats.push(splat);
+
+        }
+
+        Ok(IsoChunk {
             x,
             y,
             is_debug: debug,
             world_version,
             blending,
-            attachments
+            attachments,
+            level_max,
+            level_min,
+            levels,
+            blood_splats,
+            next_splat_index
         })
     }
 }
 
-pub fn get_saved_chunks(save_dir: PathBuf) -> Result<Vec<SavedChunk>, WorldError> {
+pub fn get_saved_chunks(save_dir: PathBuf, config: &Config) -> Result<Vec<IsoChunk>, WorldError> {
     let mut saved_chunks = Vec::new();
     let map_dir = save_dir.join("map");
     if !map_dir.exists() {
@@ -88,8 +137,12 @@ pub fn get_saved_chunks(save_dir: PathBuf) -> Result<Vec<SavedChunk>, WorldError
                         .strip_suffix(".bin")
                         .expect("Failed to strip .bin from x coordinate")
                         .parse::<i32>()
-                        .unwrap_or_else(|_| panic!("Failed to parse x coordinate as i32: {}",
-                                                   path_buf.display()));
+                        .unwrap_or_else(|_| {
+                            panic!(
+                                "Failed to parse x coordinate as i32: {}",
+                                path_buf.display()
+                            )
+                        });
                     let y = split_path
                         .next()
                         .expect("Failed to get y coordinate from path")
@@ -101,7 +154,7 @@ pub fn get_saved_chunks(save_dir: PathBuf) -> Result<Vec<SavedChunk>, WorldError
 
                     let file = BufReader::new(std::fs::File::open(&path_buf)?);
 
-                    let saved_chunk = SavedChunk::load_from_disk(file, x, y)?;
+                    let saved_chunk = IsoChunk::load_from_disk(file, x, y, config)?;
                     saved_chunks.push(saved_chunk);
                 }
             }

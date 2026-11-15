@@ -2,7 +2,7 @@ use derive_deref::{Deref, DerefMut};
 use glam::IVec3;
 
 // Just using a IVec3 since it has some nice extra methods and is easy to convert to/from other types. This is a wrapper struct to make it more clear what this is used for.
-#[derive(Deref, DerefMut, Debug, Clone)]
+#[derive(Deref, DerefMut, Debug, Clone, Default)]
 pub struct SquareCoord(IVec3);
 
 impl SquareCoord {

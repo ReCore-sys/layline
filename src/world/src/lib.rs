@@ -7,6 +7,7 @@ use crate::load_spawn_locations::load_spawn_locations;
 use ahash::AHashMap;
 use glam::Vec3A;
 use tracing::info;
+use layline_config::Config;
 use layline_shared::paths::{get_user_dir, get_zomboid_install_dir};
 use layline_shared::profession::Profession;
 
@@ -23,16 +24,16 @@ pub struct SpawnRegion {
 
 pub struct GameMap {
     pub spawn_locations: Vec<SpawnRegion>,
-    pub saved_chunks: AHashMap<(i32, i32), chunks::saved_chunk::SavedChunk>,
+    pub saved_chunks: AHashMap<(i32, i32), chunks::iso_chunk::IsoChunk>,
 }
 
 impl GameMap {
-    pub fn new(save_name: &str) -> Result<Self, WorldError> {
+    pub fn new(save_name: &str, config: &Config) -> Result<Self, WorldError> {
         let installation_path = get_zomboid_install_dir()?;
         let user_dir = get_user_dir()?;
         let save_dir = user_dir.join("Saves").join("Multiplayer").join(save_name);
 
-        let saved_chunks = chunks::saved_chunk::get_saved_chunks(save_dir)?;
+        let saved_chunks = chunks::iso_chunk::get_saved_chunks(save_dir, config)?;
 
         info!("Loaded {} saved chunks for save '{}'", saved_chunks.len(), save_name);
         

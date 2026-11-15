@@ -499,6 +499,7 @@ dependencies = [
  "crc32fast",
  "derive_deref",
  "glam",
+ "layline-config",
  "layline-lua",
  "layline-shared",
  "mlua",

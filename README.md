@@ -20,6 +20,7 @@ fraction of the hardware is hard to dislike.
 ## Features
 
 - Selecting your spawn location and character
+- Validate some parts of saved chunks
 
 ## Goals
 
@@ -37,7 +38,7 @@ fraction of the hardware is hard to dislike.
 
 - Java modding. That'd be virtually impossible to do in rust, and a vast majority of mods are written in lua anyway.
 - Perfect parity with vanilla behavior. It'll be the same game with all the same features and gameplay, but some things
-  will be slightly different. For example zombies might not have slightly different pathfinding or loot might not have
+  will be slightly different. For example zombies might have slightly different pathfinding or loot might not have
   identical distributions. We'll match what makes sense, but there isn't much point getting seed-identical behavior if
   it won't affect gameplay in any meaningful way. That being said, if some niche feature being 1:1 with vanilla is vital
   to your plans, come have a chat, and we'll see what we can do.

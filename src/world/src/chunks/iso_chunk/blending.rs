@@ -1,8 +1,8 @@
-use crate::chunks::saved_chunk::blending::blend_direction::BlendDirection;
+use crate::chunks::iso_chunk::blending::blend_direction::BlendDirection;
 use byteorder::ReadBytesExt;
 use std::io::Read;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct Blending {
     pub blending_done_full: bool,
     pub blending_done_partial: bool,

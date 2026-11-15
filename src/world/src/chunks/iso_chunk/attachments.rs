@@ -1,9 +1,9 @@
 use std::io::Read;
 use byteorder::ReadBytesExt;
 use layline_shared::read_flags;
-use crate::chunks::saved_chunk::square_coord::SquareCoord;
+use crate::chunks::iso_chunk::square_coord::SquareCoord;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct Attachments {
     pub attachments_done_full: bool,
     pub attachments_state: [bool; 4],
